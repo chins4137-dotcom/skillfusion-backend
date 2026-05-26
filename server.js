@@ -1,0 +1,60 @@
+// ============================================================
+// SkillFusion Backend — server.js (Entry Point)
+// ============================================================
+
+require('dotenv').config();
+const express   = require('express');
+const cors      = require('cors');
+const morgan    = require('morgan');
+const mongoose  = require('mongoose');
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log(`✅ MongoDB Atlas connected`);
+  } catch (err) {
+    console.error(`❌ MongoDB connection failed: ${err.message}`);
+    process.exit(1);
+  }
+};
+const errorHandler = require('./middleware/errorHandler');
+
+// ── Connect to MongoDB Atlas ──────────────────────────────
+connectDB();
+
+const app = express();
+
+// ── Core Middleware ───────────────────────────────────────
+app.use(cors({ origin: process.env.FRONTEND_ORIGIN || '*' }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
+
+// ── Health Check ──────────────────────────────────────────
+app.get('/api/health', (req, res) =>
+  res.json({ status: 'ok', timestamp: new Date().toISOString() })
+);
+
+// ── API Routes ────────────────────────────────────────────
+app.use('/api/auth',          require('./routes/auth'));
+app.use('/api/users',         require('./routes/users'));
+app.use('/api/mentorship',    require('./routes/mentorship'));
+app.use('/api/quiz',          require('./routes/quiz'));
+app.use('/api/sessions',      require('./routes/sessions'));
+app.use('/api/vault',         require('./routes/vault'));
+app.use('/api/chat',          require('./routes/chat'));
+app.use('/api/notifications', require('./routes/notifications'));
+app.use('/api/disputes',      require('./routes/disputes'));
+app.use('/api/admin',         require('./routes/admin'));
+
+// ── 404 handler ───────────────────────────────────────────
+app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
+
+// ── Global error handler ──────────────────────────────────
+app.use(errorHandler);
+
+// ── Start Server ──────────────────────────────────────────
+const PORT = 8082;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 SkillFusion API running on port ${PORT}`);
+});

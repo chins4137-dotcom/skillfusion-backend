@@ -1,0 +1,291 @@
+// ============================================================
+// SkillFusion — data/quizBank.js
+// Static quiz question bank (ported from frontend data.js)
+// 15 questions per skill category
+// ============================================================
+
+const QUIZ_BANK = {
+  JavaScript: [
+    { q: 'Which keyword declares a block-scoped variable in JS?', opts: ['var', 'let', 'def', 'dim'], ans: 1 },
+    { q: 'What does `===` check in JavaScript?', opts: ['Value only', 'Reference', 'Value and type', 'Type only'], ans: 2 },
+    { q: 'Which method removes the last element from an array?', opts: ['pop()', 'shift()', 'splice()', 'slice()'], ans: 0 },
+    { q: 'What is a closure in JavaScript?', opts: ['A loop construct', 'A type of class', 'A function with access to its outer scope', 'An async pattern'], ans: 2 },
+    { q: 'Which built-in method converts JSON to a JS object?', opts: ['JSON.parse()', 'JSON.encode()', 'JSON.stringify()', 'JSON.convert()'], ans: 0 },
+    { q: 'What does the `async` keyword do on a function?', opts: ['Makes it run faster', 'Blocks the thread', 'Returns a Promise', 'Creates a class'], ans: 2 },
+    { q: 'What is the output of `typeof null`?', opts: ['"null"', '"object"', '"undefined"', '"boolean"'], ans: 1 },
+    { q: 'Which ES6 feature allows default function parameters?', opts: ['Spread operator', 'Default parameters', 'Destructuring', 'Arrow functions'], ans: 1 },
+    { q: 'What does `Array.prototype.map()` return?', opts: ['A new array', 'The original array', 'undefined', 'A boolean'], ans: 0 },
+    { q: 'Which statement is true about `let` vs `var`?', opts: ['`let` is block-scoped', '`let` is function-scoped', '`var` is block-scoped', 'They are identical'], ans: 0 },
+    { q: 'What does `Promise.all()` do?', opts: ['Runs all in parallel, resolves when all done', 'Runs promises sequentially', 'Ignores rejections', 'Returns the first resolved'], ans: 0 },
+    { q: 'How do you prevent default form submission in JS?', opts: ['event.preventDefault()', 'event.stop()', 'return null', 'form.cancel()'], ans: 0 },
+    { q: 'What is the Prototype in JavaScript?', opts: ['A CSS feature', 'A type of loop', 'An object from which other objects inherit', 'A DOM method'], ans: 2 },
+    { q: 'Which Array method tests if ANY element passes a condition?', opts: ['every()', 'some()', 'find()', 'filter()'], ans: 1 },
+    { q: 'What does the spread operator `...` do?', opts: ['Compresses arrays', 'Expands iterable elements', 'Creates async code', 'Defines rest params'], ans: 1 },
+    { q: 'Which of the following is not a primitive type in JS?', opts: ['String', 'Number', 'Object', 'Boolean'], ans: 2 },
+    { q: 'What is the purpose of the `use strict` directive?', opts: ['Enforces stricter parsing', 'Enables async code', 'Imports modules', 'Optimizes loops'], ans: 0 },
+    { q: 'Which method is used to add elements to the start of an array?', opts: ['push()', 'unshift()', 'pop()', 'shift()'], ans: 1 },
+    { q: 'What does `Object.freeze()` do?', opts: ['Deletes the object', 'Prevents any modification to the object', 'Clones the object', 'Minifies it'], ans: 1 },
+  ],
+  Python: [
+    { q: 'Which keyword defines a function in Python?', opts: ['func', 'def', 'function', 'define'], ans: 1 },
+    { q: 'What is a Python list comprehension?', opts: ['A type of loop', 'A dictionary method', 'A compact way to create lists', 'A class feature'], ans: 2 },
+    { q: 'What does `__init__` do in a Python class?', opts: ['Initialises the object', 'Destroys the object', 'Imports modules', 'Checks types'], ans: 0 },
+    { q: 'Which data structure uses key-value pairs in Python?', opts: ['List', 'Tuple', 'Dictionary', 'Set'], ans: 2 },
+    { q: 'What is `None` in Python equivalent to?', opts: ['null/nil', '0', 'False', 'Empty string'], ans: 0 },
+    { q: 'Which operator is used for floor division in Python?', opts: ['/', '%', '//', '**'], ans: 2 },
+    { q: 'How do you open a file for reading in Python?', opts: ['read(f)', 'open(f,"r")', 'file.open(f)', 'f.open("r")'], ans: 1 },
+    { q: 'What does `pip` do?', opts: ['Runs Python scripts', 'Compiles Python', 'Debugs code', 'Manages Python packages'], ans: 3 },
+    { q: 'What is a Python generator?', opts: ['A function that yields values lazily', 'A class constructor', 'A type of list', 'An import tool'], ans: 0 },
+    { q: 'Which statement is true about Python tuples?', opts: ['They are mutable', 'They require typing', 'They allow duplicate keys', 'They are immutable'], ans: 3 },
+    { q: 'What does `*args` allow in a function?', opts: ['Keyword arguments', 'Any number of positional arguments', 'Default values', 'Type hints'], ans: 1 },
+    { q: 'What is the GIL in Python?', opts: ['Global Interpreter Lock', 'Global Import Layer', 'General I/O Loop', 'Generic Integer Library'], ans: 0 },
+    { q: 'Which module is used for regular expressions in Python?', opts: ['re', 'regex', 'regexp', 'match'], ans: 0 },
+    { q: 'What does `@staticmethod` do?', opts: ['Creates a method not bound to class or instance', 'Creates an instance method', 'Adds a decorator', 'Inherits a method'], ans: 0 },
+    { q: 'What is the output of `bool("")`?', opts: ['False', 'True', 'None', 'Error'], ans: 0 },
+  ],
+  Design: [
+    { q: 'What does "UX" stand for?', opts: ['Universal Exchange', 'User Experience', 'UI Extension', 'Unified eXecution'], ans: 1 },
+    { q: 'What is a wireframe in UI/UX?', opts: ['A low-fidelity layout sketch', 'A finished design', 'A CSS framework', 'A color palette'], ans: 0 },
+    { q: 'Which tool is most used for UI prototyping?', opts: ['Photoshop', 'Excel', 'Figma', 'VS Code'], ans: 2 },
+    { q: 'What is the 60-30-10 rule in design?', opts: ['Font sizing rule', 'Color distribution rule', 'Grid spacing rule', 'Animation timing rule'], ans: 1 },
+    { q: 'What does "affordance" mean in UX?', opts: ['Screen resolution', 'Animation speed', 'A design cue suggesting how to use an element', 'Font weight'], ans: 2 },
+    { q: 'What is a design token?', opts: ['A reusable design variable (color, spacing, font)', 'A paid Figma feature', 'A CSS hack', 'A git commit'], ans: 0 },
+    { q: 'Which principle says to reduce cognitive load?', opts: ["Hick's Law", "Miller's Law", "Fitts's Law", 'Gestalt'], ans: 1 },
+    { q: 'What is WCAG?', opts: ['Web Content Accessibility Guidelines', 'Web Color And Gamut', 'Wireframe Coding And Graphics', 'Widget Component Architecture Guide'], ans: 0 },
+    { q: 'What does "F-pattern" describe in UX?', opts: ['A navigation pattern', 'How users visually scan web pages', 'A form layout', 'A font style'], ans: 1 },
+    { q: 'What is a "persona" in UX research?', opts: ["A user's login name", 'A design color scheme', 'A fictional user archetype representing target users', 'A test case'], ans: 2 },
+    { q: 'What is contrast ratio used for?', opts: ['Animation speed', 'Grid alignment', 'Accessibility readability', 'Image quality'], ans: 2 },
+    { q: 'Which Gestalt principle groups similar items?', opts: ['Similarity', 'Proximity', 'Continuity', 'Closure'], ans: 0 },
+    { q: 'What is a usability test?', opts: ['A unit test for CSS', 'A browser compatibility test', 'Observing real users interact with a product', 'A performance benchmark'], ans: 2 },
+    { q: 'What does "information architecture" organise?', opts: ['Server files', 'How content is structured and labelled', 'JavaScript modules', 'CSS classes'], ans: 1 },
+    { q: 'What is a style guide?', opts: ['A document defining visual standards for a product', 'A textbook', 'A git branch', 'A Figma plugin'], ans: 0 },
+  ],
+  Java: [
+    { q: 'What is the entry point of a Java application?', opts: ['main(String[] args)', 'start()', 'init()', 'run()'], ans: 0 },
+    { q: 'Which keyword prevents a variable from being changed in Java?', opts: ['static', 'const', 'final', 'immutable'], ans: 2 },
+    { q: 'What is polymorphism in Java?', opts: ['Multiple inheritance', 'A data structure', 'One interface, many implementations', 'A concurrency model'], ans: 2 },
+    { q: 'What does `interface` mean in Java?', opts: ['A contract of abstract methods', 'A GUI component', 'A database connection', 'A loop type'], ans: 0 },
+    { q: 'Which collection allows no duplicates and no order?', opts: ['List', 'Map', 'Set', 'Queue'], ans: 2 },
+    { q: 'What is the difference between `==` and `.equals()` in Java?', opts: ['No difference', '`==` checks reference, `.equals()` checks value', '`==` is for strings only', '.equals() is for primitives'], ans: 1 },
+    { q: 'What does `synchronized` do?', opts: ['Speeds up code', 'Prevents multiple threads accessing a block simultaneously', 'Imports libraries', 'Converts types'], ans: 1 },
+    { q: 'What is a checked exception?', opts: ['Caught at runtime only', 'A warning', 'Must be declared or handled at compile time', 'An unchecked error'], ans: 2 },
+    { q: 'What is JVM?', opts: ['Java Visual Mode', 'Java Virtual Machine', 'Java Version Manager', 'Java Void Method'], ans: 1 },
+    { q: 'What does `abstract class` mean?', opts: ['A class with no methods', 'A class that cannot be instantiated directly', 'A private class', 'A static class'], ans: 1 },
+    { q: 'Which annotation marks a method as overriding a parent?', opts: ['@Super', '@Override', '@Inherit', '@Method'], ans: 1 },
+    { q: 'What is Garbage Collection in Java?', opts: ['Deleting files', 'Clearing arrays', 'Automatic memory management', 'A design pattern'], ans: 2 },
+    { q: 'What is the purpose of `try-catch-finally`?', opts: ['Loop control', 'Exception handling', 'Thread management', 'Memory allocation'], ans: 1 },
+    { q: 'Which Java version introduced lambda expressions?', opts: ['Java 6', 'Java 8', 'Java 7', 'Java 11'], ans: 1 },
+    { q: 'What is a `List` in Java generics?', opts: ['A fixed array', 'A dynamic ordered collection', 'A key-value store', 'An enum'], ans: 1 },
+  ],
+  General: [
+    { q: 'What does REST stand for?', opts: ['Representational State Transfer', 'Remote Execution State Transfer', 'Remote State Transmission', 'Responsive State Transfer'], ans: 0 },
+    { q: 'Which HTTP method is idempotent?', opts: ['POST', 'PATCH', 'GET', 'DELETE'], ans: 2 },
+    { q: 'What is Big-O notation used for?', opts: ['Measuring code quality', 'Analysing algorithm time/space complexity', 'Writing tests', 'Compiling code'], ans: 1 },
+    { q: 'What is a binary search tree?', opts: ['A tree where left < node < right', 'A sorted array', 'A hash map', 'A graph with weights'], ans: 0 },
+    { q: 'What does SOLID stand for in software design?', opts: ['A set of 5 object-oriented design principles', 'A testing methodology', 'A language spec', 'A deployment model'], ans: 0 },
+    { q: 'What is a race condition?', opts: ['A UI animation glitch', 'A memory overflow', 'When outcome depends on unpredictable thread timing', 'A network timeout'], ans: 2 },
+    { q: 'What is the purpose of a load balancer?', opts: ['Speed up database queries', 'Distribute traffic across servers', 'Compress images', 'Manage DNS'], ans: 1 },
+    { q: 'What is semantic versioning (semver)?', opts: ['A Git branching strategy', 'A package format', 'MAJOR.MINOR.PATCH version numbering', 'A test runner'], ans: 2 },
+    { q: 'What is CI/CD?', opts: ['Continuous Integration / Continuous Delivery', 'Code Inspection / Code Debug', 'Client Interface / Client Design', 'Cache Invalidation / Cache Delete'], ans: 0 },
+    { q: 'What is a foreign key in a relational database?', opts: ['A field referencing a primary key in another table', 'A secret API key', 'An encrypted password', 'An index'], ans: 0 },
+    { q: 'What is memoization?', opts: ['Reading from disk', 'Garbage collection', 'Caching function results to avoid recomputation', 'Memory allocation'], ans: 2 },
+    { q: 'What is the CAP theorem?', opts: ['A CSS rule', 'Consistency, Availability, Partition tolerance trade-off in distributed systems', 'A code style guide', 'A deployment checklist'], ans: 1 },
+    { q: 'What does idempotent mean?', opts: ['Running once', 'Being thread-safe', 'Producing the same result regardless of how many times applied', 'Being async'], ans: 2 },
+    { q: 'What is a singleton pattern?', opts: ['A UI component', 'A single-file application', 'A design pattern ensuring only one instance of a class', 'A CSS trick'], ans: 2 },
+    { q: 'What does "dependency injection" mean?', opts: ['Installing npm packages', 'Importing modules', 'Passing dependencies into a class rather than creating them inside', 'Circular imports'], ans: 2 },
+  ],
+  React: [
+    { q: 'What is the Virtual DOM in React?', opts: ['A direct copy of the HTML', 'An in-memory representation of the UI', 'A type of database', 'A styling engine'], ans: 1 },
+    { q: 'Which hook is used to manage state in functional components?', opts: ['useEffect', 'useState', 'useContext', 'useReducer'], ans: 1 },
+    { q: 'What is the purpose of "props" in React?', opts: ['To pass data between components', 'To style components', 'To handle events', 'To manage internal state'], ans: 0 },
+    { q: 'What does JSX stand for?', opts: ['JavaScript Extension', 'JavaScript XML', 'Java Syntax Extension', 'JSON X-Platform'], ans: 1 },
+    { q: 'Which hook handles side effects like API calls?', opts: ['useMemo', 'useEffect', 'useCallback', 'useRef'], ans: 1 },
+    { q: 'What is a "Higher-Order Component"?', opts: ['A component with many props', 'A base class', 'A function that takes a component and returns a new one', 'A layout component'], ans: 2 },
+    { q: 'How do you update state in a class component?', opts: ['this.state = {}', 'this.setState()', 'this.updateState()', 'setInternalState()'], ans: 1 },
+    { q: 'What is the use of the "key" prop in lists?', opts: ['To apply CSS styles', 'To uniquely identify elements for reconciliation', 'To encrypt data', 'To bind events'], ans: 1 },
+    { q: 'What is the Context API used for?', opts: ['Global state management without props drilling', 'Handling local state', 'Styling components', 'Writing tests'], ans: 0 },
+    { q: 'What is the "Rules of Hooks"?', opts: ['Hooks must be inside loops', 'Hooks must only be called at the top level', 'Hooks must be async', 'Hooks only work in classes'], ans: 1 },
+    { q: 'What does `useMemo` do?', opts: ['Memoizes a function', 'Memoizes a computed value', 'Triggers a re-render', 'Stores a ref'], ans: 1 },
+    { q: 'What is a "Ref" in React?', opts: ['A link to another page', 'A way to access DOM nodes or persistent values', 'A type of state', 'A debugging tool'], ans: 1 },
+    { q: 'Which lifecycle method is called after a class component mounts?', opts: ['componentWillMount', 'render', 'componentDidMount', 'constructor'], ans: 2 },
+    { q: 'What is "Prop Drilling"?', opts: ['A performance optimization', 'Passing props through multiple levels of components', 'A type of error', 'A build process'], ans: 1 },
+    { q: 'What is the purpose of `React.Fragment`?', opts: ['To split code', 'To group elements without adding extra DOM nodes', 'To handle errors', 'To style components'], ans: 1 },
+  ],
+  Nodejs: [
+    { q: 'What is Node.js?', opts: ['A frontend framework', 'A JavaScript runtime built on Chrome V8', 'A database engine', 'A programming language'], ans: 1 },
+    { q: 'What is the "Event Loop" in Node.js?', opts: ['A way to loop through arrays', 'A mechanism for non-blocking I/O operations', 'A type of error', 'A package manager'], ans: 1 },
+    { q: 'Which module is used for handling file paths?', opts: ['fs', 'path', 'url', 'http'], ans: 1 },
+    { q: 'What does `npm` stand for?', opts: ['Node Package Manager', 'New Python Module', 'Network Protocol Method', 'Node Process Monitor'], ans: 0 },
+    { q: 'How do you import a module in CommonJS?', opts: ['import x from "y"', 'require("y")', 'include("y")', 'load("y")'], ans: 1 },
+    { q: 'What is "Middleware" in Express.js?', opts: ['A database', 'Functions that have access to req and res objects', 'A frontend component', 'A server configuration'], ans: 1 },
+    { q: 'What is the purpose of `package.json`?', opts: ['To store images', 'To manage project dependencies and metadata', 'To write CSS', 'To define routes'], ans: 1 },
+    { q: 'Which core module is used to create a web server?', opts: ['net', 'http', 'https', 'express'], ans: 1 },
+    { q: 'What is a "Buffer" in Node.js?', opts: ['A storage area for raw binary data', 'A type of string', 'A cache for API calls', 'A loop construct'], ans: 0 },
+    { q: 'What does `process.env` provide?', opts: ['System info', 'Environment variables', 'Process ID', 'Memory usage'], ans: 1 },
+    { q: 'What is the difference between `setImmediate()` and `setTimeout()`?', opts: ['No difference', 'setImmediate runs after I/O events, setTimeout after a delay', 'setImmediate is slower', 'setTimeout is blocking'], ans: 1 },
+    { q: 'What is a "Stream" in Node.js?', opts: ['An array of numbers', 'An interface for handling streaming data', 'A network socket', 'A type of event'], ans: 1 },
+    { q: 'How do you handle errors in an async function?', opts: ['if-else', 'try-catch', 'callback', 'throw only'], ans: 1 },
+    { q: 'What is "Blocking I/O"?', opts: ['I/O that lets other code run', 'I/O that stops execution until finished', 'A security feature', 'A type of cache'], ans: 1 },
+    { q: 'What is "Libuv"?', opts: ['A UI library', 'A multi-platform support library for asynchronous I/O', 'A Node.js framework', 'A database'], ans: 1 },
+  ],
+  Flutter: [
+    { q: 'What language is used to build Flutter apps?', opts: ['Java', 'Swift', 'Dart', 'Kotlin'], ans: 2 },
+    { q: 'What are the two main types of widgets in Flutter?', opts: ['Simple and Complex', 'Stateless and Stateful', 'Primary and Secondary', 'Local and Global'], ans: 1 },
+    { q: 'What is the "Widget Tree"?', opts: ['A data structure for loops', 'The hierarchy of widgets in an app UI', 'A type of class', 'A file system'], ans: 1 },
+    { q: 'Which widget is used to layout items vertically?', opts: ['Row', 'Column', 'Stack', 'ListView'], ans: 1 },
+    { q: 'What does the `pubspec.yaml` file do?', opts: ['Stores images', 'Manages dependencies and project assets', 'Writes CSS', 'Defines routes'], ans: 1 },
+    { q: 'What is "Hot Reload" in Flutter?', opts: ['Restarting the entire app', 'Injecting updated code into a running app', 'Compiling to binary', 'A type of error'], ans: 1 },
+    { q: 'What is a "Scaffold"?', opts: ['A debugging tool', 'A visual structure for a material design page', 'A type of animation', 'A database connection'], ans: 1 },
+    { q: 'What is the purpose of `initState()`?', opts: ['To destroy the widget', 'To initialize state when a widget is first created', 'To handle taps', 'To build the UI'], ans: 1 },
+    { q: 'What does "Everything is a Widget" mean in Flutter?', opts: ['Only buttons are widgets', 'Every piece of the UI is a widget', 'Widgets are optional', 'Widgets are slow'], ans: 1 },
+    { q: 'How do you create a navigation route in Flutter?', opts: ['Router.go()', 'Navigator.push()', 'window.location', 'href'], ans: 1 },
+    { q: 'What is a "Future" in Dart?', opts: ['A past event', 'An object representing a potential value or error', 'A type of loop', 'A class'], ans: 1 },
+    { q: 'What is the purpose of `setState()`?', opts: ['To notify the framework that internal state has changed', 'To save to disk', 'To log errors', 'To close the app'], ans: 1 },
+    { q: 'Which widget allows overlapping other widgets?', opts: ['Column', 'Row', 'Stack', 'Padding'], ans: 2 },
+    { q: 'What is "Material Design"?', opts: ['A database', 'A design system developed by Google', 'A file format', 'A build tool'], ans: 1 },
+    { q: 'What is the difference between `main()` and `runApp()`?', opts: ['No difference', 'main is the entry point, runApp starts the app', 'runApp is for iOS only', 'main is async'], ans: 1 },
+  ],
+  Blockchain: [
+    { q: 'What is a "Genesis Block"?', opts: ['The last block', 'The first block in a blockchain', 'A block with an error', 'A type of transaction'], ans: 1 },
+    { q: 'What is a "Smart Contract"?', opts: ['A paper legal doc', 'Self-executing code stored on the blockchain', 'An encrypted email', 'A trading bot'], ans: 1 },
+    { q: 'What does "Decentralization" mean?', opts: ['Owned by one company', 'Distributed across many nodes without a central authority', 'Stored in one cloud', 'Regulated by a bank'], ans: 1 },
+    { q: 'What is a "Hash" in blockchain?', opts: ['A random string', 'A unique digital fingerprint of data', 'A type of coin', 'A private key'], ans: 1 },
+    { q: 'What is "Proof of Work"?', opts: ['A type of contract', 'A consensus mechanism requiring computational effort', 'A transaction fee', 'A mining software'], ans: 1 },
+    { q: 'What is a "Private Key" used for?', opts: ['Signing transactions and proving ownership', 'Viewing the public ledger', 'Joining the network', 'Updating the software'], ans: 0 },
+    { q: 'What is Ethereum?', opts: ['A cryptocurrency only', 'A decentralized platform for smart contracts', 'A database company', 'A networking protocol'], ans: 1 },
+    { q: 'What is a "Double Spend"?', opts: ['Buying twice', 'Spending the same digital currency more than once', 'A high transaction fee', 'An exchange bug'], ans: 1 },
+    { q: 'What is a "Consensus Mechanism"?', opts: ['A group of developers', 'A process to agree on the state of the blockchain', 'A voting system', 'A software update'], ans: 1 },
+    { q: 'What does "Immutable" mean?', opts: ['Easy to change', 'Unchangeable once recorded', 'Slow to process', 'Private'], ans: 1 },
+    { q: 'What is a "Peer-to-Peer" (P2P) network?', opts: ['A server-client model', 'A network where nodes interact directly', 'A social network', 'A type of VPN'], ans: 1 },
+    { q: 'What is a "Distributed Ledger"?', opts: ['A spreadsheet on one PC', 'A shared database synced across multiple nodes', 'A type of server', 'A banking record'], ans: 1 },
+    { q: 'What is "Gas" in Ethereum?', opts: ['Fuel for cars', 'The unit that measures computational effort for transactions', 'A type of coin', 'Network speed'], ans: 1 },
+    { q: 'What is a "Node" in blockchain?', opts: ['A single computer in the network', 'A transaction record', 'A type of wallet', 'A developer'], ans: 0 },
+    { q: 'What is an "NFT"?', opts: ['New File Type', 'Non-Fungible Token', 'Network File Transfer', 'Node Function Tool'], ans: 1 },
+  ],
+  Cloud: [
+    { q: 'What is "Serverless" computing?', opts: ['Running code without servers', 'Cloud provider manages server infrastructure', 'Offline computing', 'A type of database'], ans: 1 },
+    { q: 'What does "SaaS" stand for?', opts: ['Software as a Service', 'System as a Service', 'Storage as a Service', 'Security as a Service'], ans: 0 },
+    { q: 'Which cloud service model provides a virtual machine?', opts: ['PaaS', 'SaaS', 'IaaS', 'FaaS'], ans: 2 },
+    { q: 'What is an "Availability Zone"?', opts: ['A data center in a region', 'A specific country', 'A type of storage', 'A network speed'], ans: 0 },
+    { q: 'What is "Auto Scaling"?', opts: ['Automatically adding servers based on load', 'Changing image sizes', 'Database backup', 'Network encryption'], ans: 0 },
+    { q: 'What is a "Public Cloud"?', opts: ['Shared infrastructure over the internet', 'A private company network', 'Open source software', 'A government cloud'], ans: 0 },
+    { q: 'What is "Latency" in cloud computing?', opts: ['Data transfer speed', 'Time delay in data transfer', 'Storage capacity', 'CPU power'], ans: 1 },
+    { q: 'Which service is used for object storage?', opts: ['EBS', 'S3', 'RDS', 'Lambda'], ans: 1 },
+    { q: 'What is "VPC"?', opts: ['Virtual Private Cloud', 'Virtual Public Connection', 'Variable Power Control', 'Verified Port Connection'], ans: 0 },
+    { q: 'What is "Edge Computing"?', opts: ['Processing data closer to the source', 'Cloud computing at the border', 'Fast internet', 'A type of browser'], ans: 0 },
+    { q: 'What is "Cold Storage"?', opts: ['Fast storage', 'Inexpensive storage for rarely accessed data', 'SSD storage', 'Encrypted storage'], ans: 1 },
+    { q: 'What is "Multi-Cloud"?', opts: ['Using multiple cloud providers', 'Using many servers', 'Cloud with many users', 'Cloud in multiple countries'], ans: 0 },
+    { q: 'What does "PaaS" provide?', opts: ['Hardware', 'Platform for application development', 'End-user software', 'Networking only'], ans: 1 },
+    { q: 'What is a "Load Balancer" in cloud?', opts: ['Distributes incoming traffic', 'Speeds up CPU', 'Backs up data', 'Manages DNS'], ans: 0 },
+    { q: 'What is "Cloud Migration"?', opts: ['Moving data to the cloud', 'Updating cloud software', 'Deleting cloud data', 'Syncing devices'], ans: 0 },
+  ],
+  Product: [
+    { q: 'What is an "MVP"?', opts: ['Most Valuable Person', 'Minimum Viable Product', 'Maximum Value Process', 'Minimum Visual Prototype'], ans: 1 },
+    { q: 'What is the "Product Life Cycle"?', opts: ['Stages from launch to decline', 'Production speed', 'Employee shifts', 'Marketing budget'], ans: 0 },
+    { q: 'What does "Agile" focus on?', opts: ['Iterative development and customer feedback', 'Strict documentation', 'Fixed deadlines', 'Individual work'], ans: 0 },
+    { q: 'What is a "User Story"?', opts: ['A biography', 'A description of a feature from the user perspective', 'A marketing ad', 'A test case'], ans: 1 },
+    { q: 'What is "Scrum"?', opts: ['A type of database', 'An Agile framework', 'A programming language', 'A design tool'], ans: 1 },
+    { q: 'What is a "Product Roadmap"?', opts: ['A GPS tool', 'A visual summary of product direction', 'A user manual', 'A list of bugs'], ans: 1 },
+    { q: 'What does "KPI" stand for?', opts: ['Key Performance Indicator', 'Knowledge Process Integration', 'Key Product Interest', 'Known Problem Index'], ans: 0 },
+    { q: 'What is "A/B Testing"?', opts: ['Comparing two versions to see which performs better', 'Double entry accounting', 'Alpha/Beta software', 'A design review'], ans: 0 },
+    { q: 'What is "Churn Rate"?', opts: ['Speed of production', 'Percentage of customers who stop using a product', 'Network traffic', 'CPU usage'], ans: 1 },
+    { q: 'What is a "Stakeholder"?', opts: ['An investor only', 'Anyone affected by or interested in the product', 'A developer', 'A user'], ans: 1 },
+    { q: 'What is "Product-Market Fit"?', opts: ['When a product satisfies strong market demand', 'The size of a box', 'A marketing slogan', 'A competitive analysis'], ans: 0 },
+    { q: 'What is a "Backlog"?', opts: ['A system log', 'A prioritized list of work for the team', 'A hard drive backup', 'A history of sales'], ans: 1 },
+    { q: 'What is "Customer Discovery"?', opts: ['Finding new customers', 'Understanding customer needs through research', 'Marketing outreach', 'A sales pitch'], ans: 1 },
+    { q: 'What is "Unit Economics"?', opts: ['Company tax', 'Revenue and costs of a single unit of a product', 'Macroeconomics', 'Budgeting'], ans: 1 },
+    { q: 'What is a "Sprint" in Scrum?', opts: ['Running fast', 'A time-boxed period to complete work', 'A short meeting', 'A type of release'], ans: 1 },
+  ],
+};
+
+// ── Skill → Quiz category mapping ─────────────────────────
+const SKILL_TO_CATEGORY = {
+  'Frontend Dev':       'JavaScript',
+  'Backend Dev':        'Nodejs',
+  'UI/UX Design':       'Design',
+  'Data Science':       'Python',
+  'Machine Learning':   'Python',
+  'DevOps':             'General',
+  'Mobile Dev':         'Flutter',
+  'Cloud Computing':    'General',
+  'Cybersecurity':      'General',
+  'Blockchain':         'Blockchain',
+  'Game Dev':           'General',
+  'Product Management': 'General',
+  'Digital Marketing':  'General',
+  'SEO':                'General',
+  'Content Writing':    'General',
+  'Copywriting':        'General',
+  'Video Editing':      'General',
+  'Graphic Design':     'Design',
+  '3D Modeling':        'Design',
+  'Animation':          'Design',
+  'UI':                 'Design',
+  'UX':                 'Design',
+  'JavaScript':         'JavaScript',
+  'TypeScript':         'JavaScript',
+  'React':              'React',
+  'Next.js':            'React',
+  'Node.js':            'Nodejs',
+  'Express.js':         'Nodejs',
+  'GraphQL':            'Nodejs',
+  'Python':             'Python',
+  'Flutter':            'Flutter',
+  'Java':               'Java',
+  'C++':                'General',
+  'SQL':                'General',
+  'Docker':             'General',
+  'Web3':               'Blockchain',
+  'iOS Development':    'Flutter',
+  'Android Development':'Flutter',
+  'Cloud Computing':    'Cloud',
+  'Product Management': 'Product',
+  'Digital Marketing':  'Product',
+  'Agile/Scrum':        'Product',
+  'Go':                 'Nodejs', // Map to Nodejs for backend logic questions
+  'Rust':               'Nodejs',
+  'Data Structures':    'Java',
+  'Algorithms':         'Python',
+  'Kotlin':             'Java',
+  'Swift':              'Flutter',
+  'AR/VR':              'Design',
+  'Embedded Systems':   'General',
+  'Ethical Hacking':    'General',
+  'Salesforce':         'General',
+};
+
+/**
+ * Get 15 questions for a given skill (shuffled order, answers stripped).
+ * @param {string} skill
+ * @returns {{ q: string, opts: string[], _ans: number }[]}
+ */
+function getQuestionsForSkill(skill) {
+  const category = SKILL_TO_CATEGORY[skill] || 'General';
+  const bank     = QUIZ_BANK[category] || QUIZ_BANK.General;
+
+  // Shuffle a copy
+  const shuffled = [...bank].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 15).map((item, idx) => ({
+    id:   idx,
+    q:    item.q,
+    opts: item.opts,
+    _ans: item.ans, // server keeps the answer; client never sees this field
+  }));
+}
+
+/**
+ * Score a submitted quiz.
+ * @param {Array} questions  — array from getQuestionsForSkill (with _ans)
+ * @param {Object} answers   — { "0": 1, "1": 2, ... }  index → selected option
+ * @returns {{ score: number, correctQ: number, totalQ: number }}
+ */
+function scoreQuiz(questions, answers) {
+  let correct = 0;
+  questions.forEach((q, i) => {
+    if (parseInt(answers[i]) === q._ans) correct++;
+  });
+  const score = Math.round((correct / questions.length) * 100);
+  return { score, correctQ: correct, totalQ: questions.length };
+}
+
+module.exports = { getQuestionsForSkill, scoreQuiz, SKILL_TO_CATEGORY };
