@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const MONGO_URI = "mongodb+srv://skillfusionwebapp_db_user:bmsceapp@cluster0.vyg8wvr.mongodb.net/skillfusion?retryWrites=true&w=majority";
+const MONGO_URI = process.env.MONGO_URI;
 
 async function seedSessions() {
   try {
