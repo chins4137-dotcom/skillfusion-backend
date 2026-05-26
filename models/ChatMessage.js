@@ -11,6 +11,12 @@ const chatMessageSchema = new mongoose.Schema({
   message:      { type: String, required: true, maxlength: 2000 },
   read:         { type: Boolean, default: false },
   timestamp:    { type: Date, default: Date.now },
+  
+  // Custom properties for slot booking
+  messageType:  { type: String, enum: ['text', 'slot_request'], default: 'text' },
+  slotDay:      { type: String },
+  slotTime:     { type: String },
+  slotStatus:   { type: String, enum: ['pending', 'accepted', 'rejected', 'expired'] },
 }, { timestamps: false });
 
 chatMessageSchema.index({ mentorshipId: 1, timestamp: 1 });
