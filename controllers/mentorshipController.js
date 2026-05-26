@@ -146,7 +146,7 @@ exports.respondMentorship = async (req, res, next) => {
       await Notification.create({
         userId:  m.studentId,
         type:    'reject',
-        message: `❌ ${req.user.name} couldn't take your ${m.skill} request right now.`,
+        message: `❌ ${req.user.name} is currently at full capacity for ${m.skill} and couldn't accept your request at this time, but highly encourages you to explore other outstanding ${m.skill} mentors!`,
       });
     }
 
