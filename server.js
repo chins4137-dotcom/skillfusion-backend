@@ -54,7 +54,11 @@ app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
 app.use(errorHandler);
 
 // ── Start Server ──────────────────────────────────────────
-const PORT = 8082;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 SkillFusion API running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 8082;
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 SkillFusion API running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
