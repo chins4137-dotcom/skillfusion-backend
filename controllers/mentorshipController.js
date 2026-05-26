@@ -125,7 +125,7 @@ exports.requestMentorship = async (req, res, next) => {
 // POST /api/mentorship/:id/respond ────────────────────────
 exports.respondMentorship = async (req, res, next) => {
   try {
-    const { action } = req.body; // 'accept' or 'reject'
+    const action = req.body.action || req.body.status; // Support both 'action' and 'status' payloads
     const m = await Mentorship.findById(req.params.id);
     if (!m) return res.status(404).json({ message: 'Mentorship not found' });
     if (String(m.mentorId) !== String(req.user._id)) return res.status(403).json({ message: 'Not your mentorship' });
