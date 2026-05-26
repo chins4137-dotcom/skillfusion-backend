@@ -3,6 +3,8 @@
 // ============================================================
 
 const User = require('../models/User');
+const Mentorship = require('../models/Mentorship');
+
 
 // GET /api/users/public/:id ───────────────────────────────
 exports.getPublicProfile = async (req, res, next) => {
@@ -22,9 +24,49 @@ exports.updateProfile = async (req, res, next) => {
     if (name)           user.name          = name.trim();
     if (bio !== undefined) user.bio         = bio.trim();
     if (avatar)         user.avatar        = avatar;
-    if (skillsToLearn)  user.skillsToLearn = skillsToLearn;
+
+    // Check skillsToLearn changes (for students)
+    if (skillsToLearn) {
+      const oldSkills = user.skillsToLearn || [];
+      const removedSkills = oldSkills.filter(s => !skillsToLearn.includes(s));
+      if (removedSkills.length > 0) {
+        // Query if there is an active/pending mentorship for the student for any of these removed skills
+        const active = await Mentorship.findOne({
+          studentId: user._id,
+          skill: { $in: removedSkills },
+          status: { $in: ['pending', 'accepted'] }
+        });
+        if (active) {
+          return res.status(400).json({ message: `Cannot remove skill '${active.skill}' because you have a pending or active mentorship for it.` });
+        }
+      }
+      user.skillsToLearn = skillsToLearn;
+    }
+
+    // Check skillsToTeach changes (for mentors)
     if (skillsToTeach) {
-      // Only allow adding verifiedSkills to teach list
+      // 1. Check if any skill is removed
+      const oldSkills = user.skillsToTeach || [];
+      const removedSkills = oldSkills.filter(s => !skillsToTeach.includes(s));
+      if (removedSkills.length > 0) {
+        // Query if there is an active/pending mentorship for the mentor for any of these removed skills
+        const active = await Mentorship.findOne({
+          mentorId: user._id,
+          skill: { $in: removedSkills },
+          status: { $in: ['pending', 'accepted'] }
+        });
+        if (active) {
+          return res.status(400).json({ message: `Cannot remove skill '${active.skill}' because you have a pending or active mentorship for it.` });
+        }
+      }
+
+      // 2. Check if any skill is added and not verified
+      const addedSkills = skillsToTeach.filter(s => !oldSkills.includes(s));
+      const unverified = addedSkills.filter(s => !(user.verifiedSkills || []).includes(s));
+      if (unverified.length > 0) {
+        return res.status(400).json({ message: `To teach ${unverified.join(', ')}, you must first pass the verification quiz for those skills.` });
+      }
+
       user.skillsToTeach = skillsToTeach;
     }
 
