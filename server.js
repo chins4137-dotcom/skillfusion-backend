@@ -14,7 +14,6 @@ const connectDB = async () => {
     console.log(`✅ MongoDB Atlas connected`);
   } catch (err) {
     console.error(`❌ MongoDB connection failed: ${err.message}`);
-    process.exit(1);
   }
 };
 const errorHandler = require('./middleware/errorHandler');
@@ -32,6 +31,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/admin', express.static(path.join(__dirname, 'public')));
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
+
+// ── Admin Web Route ───────────────────────────────────────
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // ── Health Check ──────────────────────────────────────────
 app.get('/api/health', (req, res) =>
