@@ -2278,25 +2278,25 @@
       }
 
       sorted.forEach((user, index) => {
-        let rankText = \`#\${index + 1}\`;
+        let rankText = `#${index + 1}`;
         if (index === 0) rankText = '<span style="font-size:24px;">🥇</span>';
         else if (index === 1) rankText = '<span style="font-size:24px;">🥈</span>';
         else if (index === 2) rankText = '<span style="font-size:24px;">🥉</span>';
 
         tbody.innerHTML += `
           <tr>
-            <td style="font-weight: 800; font-size: 18px; color: var(--text-secondary); width: 80px; text-align:center;">\${rankText}</td>
+            <td style="font-weight: 800; font-size: 18px; color: var(--text-secondary); width: 80px; text-align:center;">${rankText}</td>
             <td>
               <div style="display:flex; align-items:center; gap:12px;">
-                <div class="avatar-wrapper" style="background-color: var(--primary); color: #fff; width:36px; height:36px;">\${user.name.charAt(0).toUpperCase()}</div>
+                <div class="avatar-wrapper" style="background-color: var(--primary); color: #fff; width:36px; height:36px;">${user.name.charAt(0).toUpperCase()}</div>
                 <div>
-                  <div style="font-weight: 700; color: #FFF; font-size:15px;">\${user.name}</div>
-                  <div style="font-size: 12px; color: var(--text-secondary);">@\${user.username}</div>
+                  <div style="font-weight: 700; color: #FFF; font-size:15px;">${user.name}</div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">@${user.username}</div>
                 </div>
               </div>
             </td>
-            <td><span class="skill-chip" style="text-transform: uppercase;">\${user.role}</span></td>
-            <td><strong style="color: var(--primary); font-size: 18px;">\${user.xp || 0} <span style="font-size:12px; font-weight:600; color:var(--text-secondary)">XP</span></strong></td>
+            <td><span class="skill-chip" style="text-transform: uppercase;">${user.role}</span></td>
+            <td><strong style="color: var(--primary); font-size: 18px;">${user.xp || 0} <span style="font-size:12px; font-weight:600; color:var(--text-secondary)">XP</span></strong></td>
           </tr>
         `;
       });
