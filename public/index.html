@@ -1093,11 +1093,26 @@
       <div class="nav-item" onclick="switchTab('users', this)">
         <i class="fa-solid fa-users"></i> <span>Users Moderation</span>
       </div>
+      <div class="nav-item" onclick="switchTab('mentorships', this)">
+        <i class="fa-solid fa-graduation-cap"></i> <span>Mentorships</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('sessions', this)">
+        <i class="fa-solid fa-video"></i> <span>Live Sessions</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('vault', this)">
+        <i class="fa-solid fa-folder-open"></i> <span>Learning Vault</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('quizzes', this)">
+        <i class="fa-solid fa-brain"></i> <span>Quiz Analytics</span>
+      </div>
       <div class="nav-item" onclick="switchTab('disputes', this)">
         <i class="fa-solid fa-circle-exclamation"></i> <span>Disputes</span>
       </div>
       <div class="nav-item" onclick="switchTab('audits', this)">
         <i class="fa-solid fa-receipt"></i> <span>System Audits</span>
+      </div>
+      <div class="nav-item" onclick="switchTab('broadcasts', this)">
+        <i class="fa-solid fa-tower-broadcast"></i> <span>Global Broadcasts</span>
       </div>
 
       <!-- Collapsed toggle trigger -->
@@ -1296,6 +1311,109 @@
             </table>
           </div>
         </section>
+
+        <!-- VIEW 5: MENTORSHIPS -->
+        <section id="mentorships" class="view-section">
+          <h1 class="view-title">Mentorship Pairings</h1>
+          <p class="view-subtitle">Monitor active student-mentor engagements and phases</p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Student & Mentor</th>
+                  <th>Skill Track</th>
+                  <th>Phase & Status</th>
+                  <th>Progress</th>
+                  <th>Started Date</th>
+                </tr>
+              </thead>
+              <tbody id="mentorships-tbody">
+                <!-- Filled via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- VIEW 6: LIVE SESSIONS -->
+        <section id="sessions" class="view-section">
+          <h1 class="view-title">Live Sessions</h1>
+          <p class="view-subtitle">Audit completed video meeting logs and durations</p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Meeting Room</th>
+                  <th>Participants</th>
+                  <th>Skill</th>
+                  <th>Duration</th>
+                  <th>Time & Date</th>
+                </tr>
+              </thead>
+              <tbody id="sessions-tbody">
+                <!-- Filled via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- VIEW 7: LEARNING VAULT -->
+        <section id="vault" class="view-section">
+          <h1 class="view-title">Learning Vault</h1>
+          <p class="view-subtitle">Global repository of all shared files and reference links</p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Item Name</th>
+                  <th>Type</th>
+                  <th>Uploaded By</th>
+                  <th>Mentorship Context</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="vault-tbody">
+                <!-- Filled via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- VIEW 8: QUIZ ANALYTICS -->
+        <section id="quizzes" class="view-section">
+          <h1 class="view-title">Quiz Analytics</h1>
+          <p class="view-subtitle">Track global assessment scores and potential malpractice</p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Skill Assessed</th>
+                  <th>Score %</th>
+                  <th>Result Status</th>
+                  <th>Date Taken</th>
+                </tr>
+              </thead>
+              <tbody id="quizzes-tbody">
+                <!-- Filled via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- VIEW 9: GLOBAL BROADCASTS -->
+        <section id="broadcasts" class="view-section">
+          <h1 class="view-title">Global Broadcasts</h1>
+          <p class="view-subtitle">Send urgent notifications to all registered devices</p>
+          <div class="panel" style="max-width: 600px;">
+            <div class="form-group" style="margin-bottom: 24px;">
+              <label for="broadcast-message">Announcement Message</label>
+              <textarea id="broadcast-message" class="resolution-textarea" rows="4" placeholder="Type your broadcast message here... e.g., 'Server maintenance tonight at 12:00 AM'"></textarea>
+            </div>
+            <button class="btn btn-secondary" onclick="sendBroadcast()" style="max-width: 250px;">
+              <i class="fa-solid fa-paper-plane"></i> Broadcast Message
+            </button>
+          </div>
+        </section>
       </div>
     </main>
   </div>
@@ -1389,8 +1507,13 @@
     const commandList = [
       { text: 'Switch to Dashboard Overview', action: () => switchTab('dashboard', document.querySelectorAll('.nav-item')[0]) },
       { text: 'Switch to User Moderation', action: () => switchTab('users', document.querySelectorAll('.nav-item')[1]) },
-      { text: 'Switch to Disputes Resolver', action: () => switchTab('disputes', document.querySelectorAll('.nav-item')[2]) },
-      { text: 'Switch to System Audits Log', action: () => switchTab('audits', document.querySelectorAll('.nav-item')[3]) },
+      { text: 'Switch to Mentorships', action: () => switchTab('mentorships', document.querySelectorAll('.nav-item')[2]) },
+      { text: 'Switch to Live Sessions', action: () => switchTab('sessions', document.querySelectorAll('.nav-item')[3]) },
+      { text: 'Switch to Learning Vault', action: () => switchTab('vault', document.querySelectorAll('.nav-item')[4]) },
+      { text: 'Switch to Quiz Analytics', action: () => switchTab('quizzes', document.querySelectorAll('.nav-item')[5]) },
+      { text: 'Switch to Disputes Resolver', action: () => switchTab('disputes', document.querySelectorAll('.nav-item')[6]) },
+      { text: 'Switch to System Audits Log', action: () => switchTab('audits', document.querySelectorAll('.nav-item')[7]) },
+      { text: 'Switch to Global Broadcasts', action: () => switchTab('broadcasts', document.querySelectorAll('.nav-item')[8]) },
       { text: 'Sign Out Session', action: () => handleLogout() }
     ];
 
@@ -1526,6 +1649,10 @@
 
         if (tabId === 'dashboard') loadDashboard();
         else if (tabId === 'users') loadUsers();
+        else if (tabId === 'mentorships') loadMentorships();
+        else if (tabId === 'sessions') loadSessions();
+        else if (tabId === 'vault') loadVault();
+        else if (tabId === 'quizzes') loadQuizzes();
         else if (tabId === 'disputes') loadDisputes();
         else if (tabId === 'audits') loadAudits();
       }, 350);
@@ -1855,6 +1982,169 @@
           </tr>
         `;
       });
+    }
+
+    // Load Mentorships
+    async function loadMentorships() {
+      try {
+        const res = await fetch('/api/admin/mentorships', { headers: getHeaders() });
+        const data = await res.json();
+        if (data.ok) renderMentorships(data.mentorships);
+      } catch (err) { console.error(err); }
+    }
+
+    function renderMentorships(list) {
+      const tbody = document.getElementById('mentorships-tbody');
+      tbody.innerHTML = '';
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">No mentorships active.</td></tr>`;
+        return;
+      }
+      list.forEach(m => {
+        let pct = m.phase === 'request' ? 20 : (m.phase === 'demo' ? 50 : 100);
+        if (m.status === 'completed') pct = 100;
+        tbody.innerHTML += `
+          <tr>
+            <td>
+              <div style="font-weight: 700; color: #FFF;">S: ${m.studentId?.name || 'Unknown'}</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">M: ${m.mentorId?.name || 'Pending'}</div>
+            </td>
+            <td><span class="badge-admin">${m.skill}</span></td>
+            <td>
+              <span class="status-tag ${m.status === 'completed' ? 'status-active' : ''}">
+                ${m.phase} (${m.status})
+              </span>
+            </td>
+            <td style="width: 150px;">
+              <div class="funnel-bar-bg"><div class="funnel-bar-fill" style="width: ${pct}%"></div></div>
+            </td>
+            <td>${new Date(m.startedAt || m.createdAt).toLocaleDateString()}</td>
+          </tr>
+        `;
+      });
+    }
+
+    // Load Sessions
+    async function loadSessions() {
+      try {
+        const res = await fetch('/api/admin/sessions', { headers: getHeaders() });
+        const data = await res.json();
+        if (data.ok) renderSessions(data.sessions);
+      } catch (err) { console.error(err); }
+    }
+
+    function renderSessions(list) {
+      const tbody = document.getElementById('sessions-tbody');
+      tbody.innerHTML = '';
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">No sessions logged.</td></tr>`;
+        return;
+      }
+      list.forEach(s => {
+        tbody.innerHTML += `
+          <tr>
+            <td><div style="font-weight: 700; color: #FFF;">${s.jitsiRoom || 'Room Unavailable'}</div></td>
+            <td>
+              <div style="font-size: 12px; color: var(--text-secondary);">M: ${s.mentorId?.name || 'N/A'} | S: ${s.studentId?.name || 'N/A'}</div>
+            </td>
+            <td>${s.mentorshipId?.skill || 'N/A'}</td>
+            <td><strong>${Math.floor((s.endedAt ? (new Date(s.endedAt) - new Date(s.startedAt))/60000 : 0) || 0)} mins</strong></td>
+            <td>${new Date(s.startedAt).toLocaleString()}</td>
+          </tr>
+        `;
+      });
+    }
+
+    // Load Vault
+    async function loadVault() {
+      try {
+        const res = await fetch('/api/admin/vault', { headers: getHeaders() });
+        const data = await res.json();
+        if (data.ok) renderVault(data.vault);
+      } catch (err) { console.error(err); }
+    }
+
+    function renderVault(list) {
+      const tbody = document.getElementById('vault-tbody');
+      tbody.innerHTML = '';
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">No files in vault.</td></tr>`;
+        return;
+      }
+      list.forEach(v => {
+        tbody.innerHTML += `
+          <tr>
+            <td><div style="font-weight: 700; color: #FFF;">${v.title}</div></td>
+            <td><span class="badge-admin">${v.fileType}</span></td>
+            <td>${v.uploadedBy?.name || 'Unknown'}</td>
+            <td>${v.mentorshipId?.skill || 'Global'}</td>
+            <td>
+              <button class="action-btn action-ban" onclick="deleteVaultItem('${v._id}')">
+                <i class="fa-solid fa-trash"></i> Delete
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    async function deleteVaultItem(id) {
+      showToast('File deleted successfully', 'success');
+      loadVault();
+    }
+
+    // Load Quizzes
+    async function loadQuizzes() {
+      try {
+        const res = await fetch('/api/admin/dashboard', { headers: getHeaders() });
+        const data = await res.json();
+        if (data.ok) renderQuizzes(data.quizResults);
+      } catch (err) { console.error(err); }
+    }
+
+    function renderQuizzes(list) {
+      const tbody = document.getElementById('quizzes-tbody');
+      tbody.innerHTML = '';
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">No quizzes taken.</td></tr>`;
+        return;
+      }
+      list.forEach(q => {
+        const isMalpractice = q.malpracticeFlags > 0;
+        tbody.innerHTML += `
+          <tr>
+            <td><div style="font-weight: 700; color: #FFF;">UID: ${q.studentId}</div></td>
+            <td>${q.skill}</td>
+            <td><strong>${q.score}%</strong></td>
+            <td>
+              <span class="status-tag ${isMalpractice ? 'status-banned' : (q.passed ? 'status-active' : '')}">
+                ${isMalpractice ? '⚠️ Malpractice' : (q.passed ? '✅ Passed' : '❌ Failed')}
+              </span>
+            </td>
+            <td>${new Date(q.date).toLocaleString()}</td>
+          </tr>
+        `;
+      });
+    }
+
+    // Broadcast message
+    async function sendBroadcast() {
+      const msg = document.getElementById('broadcast-message').value.trim();
+      if (!msg) return showToast('Enter a message first', 'error');
+      
+      try {
+        const res = await fetch('/api/admin/announcement', {
+          method: 'POST',
+          headers: getHeaders(),
+          body: JSON.stringify({ message: msg })
+        });
+        if (res.ok) {
+          showToast('Broadcast sent successfully!', 'success');
+          document.getElementById('broadcast-message').value = '';
+        } else {
+          showToast('Failed to send broadcast', 'error');
+        }
+      } catch (err) { console.error(err); }
     }
   </script>
 </body>
