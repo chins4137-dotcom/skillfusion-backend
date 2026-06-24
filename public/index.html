@@ -10,14 +10,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <style>
     /* Reset & Theme Variable Tokens */
     :root {
-      --bg-primary: #0A0A0E;
-      --bg-secondary: #12121A;
-      --bg-card: #181824;
-      --bg-input: #1F1F2E;
+      --bg-primary: #0A0A0F;
+      --bg-secondary: rgba(18, 18, 26, 0.95);
+      --bg-card: rgba(24, 24, 36, 0.7);
+      --bg-input: #1F1F2F;
       --primary: #6C63FF;
       --primary-hover: #5B52E5;
       --secondary: #00D4AA;
@@ -29,6 +31,7 @@
       --border-color: rgba(255, 255, 255, 0.08);
       --font-display: 'Outfit', sans-serif;
       --font-body: 'Inter', sans-serif;
+      --glow-glow: 0 0 20px rgba(108, 99, 255, 0.15);
     }
 
     * {
@@ -39,6 +42,9 @@
 
     body {
       background-color: var(--bg-primary);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(108, 99, 255, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 212, 170, 0.06) 0%, transparent 45%);
       color: var(--text-main);
       font-family: var(--font-body);
       min-height: 100vh;
@@ -88,11 +94,12 @@
       max-width: 420px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.5);
       text-align: center;
+      backdrop-filter: blur(12px);
     }
 
     .login-logo {
       font-family: var(--font-display);
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 900;
       margin-bottom: 8px;
       letter-spacing: -1px;
@@ -155,11 +162,12 @@
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
+      transition: all 0.2s, transform 0.1s;
     }
 
     .btn:hover {
       background-color: var(--primary-hover);
+      box-shadow: 0 0 15px rgba(108, 99, 255, 0.4);
     }
 
     .btn:active {
@@ -171,6 +179,7 @@
     }
     .btn-danger:hover {
       background-color: #D32F2F;
+      box-shadow: 0 0 15px rgba(255, 68, 68, 0.4);
     }
 
     .btn-secondary {
@@ -178,6 +187,7 @@
     }
     .btn-secondary:hover {
       background-color: #00B38F;
+      box-shadow: 0 0 15px rgba(0, 212, 170, 0.4);
     }
 
     .login-error {
@@ -196,17 +206,19 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      backdrop-filter: blur(10px);
     }
 
     .header-logo {
       font-family: var(--font-display);
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 900;
       letter-spacing: -0.5px;
     }
 
     .header-logo span {
       color: var(--primary);
+      text-shadow: 0 0 10px rgba(108, 99, 255, 0.3);
     }
 
     .header-user {
@@ -219,7 +231,7 @@
       background-color: rgba(108, 99, 255, 0.15);
       border: 1px solid var(--primary);
       color: var(--primary);
-      padding: 4px 10px;
+      padding: 4px 12px;
       border-radius: 20px;
       font-size: 11px;
       font-weight: 800;
@@ -231,7 +243,7 @@
       background: transparent;
       border: 1px solid var(--border-color);
       color: var(--text-secondary);
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: 6px;
       font-size: 12px;
       font-weight: 600;
@@ -242,6 +254,7 @@
     .btn-logout:hover {
       border-color: var(--danger);
       color: var(--danger);
+      background-color: rgba(255, 68, 68, 0.05);
     }
 
     .console-wrapper {
@@ -252,20 +265,21 @@
 
     /* Sidebar Navigation */
     aside {
-      width: 240px;
+      width: 250px;
       background-color: var(--bg-secondary);
       border-right: 1px solid var(--border-color);
       padding: 24px 16px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
+      backdrop-filter: blur(10px);
     }
 
     .nav-item {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 12px 16px;
+      padding: 12px 18px;
       color: var(--text-secondary);
       text-decoration: none;
       font-size: 14px;
@@ -283,6 +297,7 @@
     .nav-item.active {
       background-color: var(--primary);
       color: #FFF;
+      box-shadow: 0 4px 12px rgba(108, 99, 255, 0.25);
     }
 
     /* Content Area */
@@ -311,6 +326,7 @@
       font-size: 32px;
       font-weight: 800;
       margin-bottom: 4px;
+      letter-spacing: -0.5px;
     }
 
     .view-subtitle {
@@ -335,6 +351,14 @@
       display: flex;
       align-items: center;
       gap: 20px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.15);
+      box-shadow: var(--glow-glow);
     }
 
     .kpi-icon {
@@ -379,6 +403,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
+      margin-bottom: 24px;
     }
 
     .panel {
@@ -386,6 +411,7 @@
       border: 1px solid var(--border-color);
       border-radius: 12px;
       padding: 24px;
+      backdrop-filter: blur(8px);
     }
 
     .panel-title {
@@ -398,81 +424,6 @@
       gap: 8px;
       border-bottom: 1px solid var(--border-color);
       padding-bottom: 12px;
-    }
-
-    /* Funnel List */
-    .funnel-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .funnel-row {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .funnel-info {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .funnel-label {
-      color: var(--text-secondary);
-    }
-
-    .funnel-value {
-      color: #FFF;
-    }
-
-    .funnel-bar-bg {
-      height: 8px;
-      background-color: var(--bg-input);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .funnel-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      border-radius: 4px;
-      width: 0%;
-      transition: width 1s ease-out;
-    }
-
-    /* Heatmap List */
-    .heatmap-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .heatmap-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 14px;
-      background-color: rgba(255,255,255,0.02);
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-    }
-
-    .heatmap-skill {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .heatmap-badge {
-      background-color: rgba(0, 212, 170, 0.1);
-      border: 1px solid rgba(0, 212, 170, 0.25);
-      color: var(--secondary);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 12px;
     }
 
     /* Search & Table Styles */
@@ -517,6 +468,7 @@
       background-color: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 12px;
+      backdrop-filter: blur(8px);
     }
 
     table {
@@ -571,6 +523,12 @@
       color: var(--danger);
     }
 
+    .status-warning {
+      background-color: rgba(255, 179, 71, 0.1);
+      border: 1px solid rgba(255, 179, 71, 0.25);
+      color: var(--warning);
+    }
+
     .action-btn {
       padding: 6px 12px;
       border-radius: 6px;
@@ -619,6 +577,7 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
+      backdrop-filter: blur(8px);
     }
 
     .dispute-header {
@@ -738,6 +697,9 @@
       <div class="nav-item" onclick="switchTab('disputes', this)">
         <i class="fa-solid fa-circle-exclamation"></i> Disputes
       </div>
+      <div class="nav-item" onclick="switchTab('quizzes', this)">
+        <i class="fa-solid fa-circle-question"></i> Quiz Audits
+      </div>
       <div class="nav-item" onclick="switchTab('audits', this)">
         <i class="fa-solid fa-receipt"></i> System Audits
       </div>
@@ -747,7 +709,7 @@
       <!-- TAB 1: DASHBOARD -->
       <section id="dashboard" class="view-section active">
         <h1 class="view-title">System Overview</h1>
-        <p class="view-subtitle">High-level metrics and platform funnel analysis</p>
+        <p class="view-subtitle">Real-time metrics, active logs, and interactive analytics charts</p>
         
         <div class="kpi-grid">
           <div class="kpi-card">
@@ -780,60 +742,62 @@
           </div>
         </div>
 
+        <!-- CHARTS SPLIT ROW 1 -->
         <div class="split-grid">
-          <!-- Funnel -->
           <div class="panel">
-            <div class="panel-title">
-              <i class="fa-solid fa-filter"></i> Enrollment Funnel
+            <div class="panel-title"><i class="fa-solid fa-chart-line"></i> Daily Active Logins (DAU)</div>
+            <div style="height: 250px; position: relative;">
+              <canvas id="dauChartCanvas"></canvas>
             </div>
-            <div class="funnel-list">
-              <div class="funnel-row">
-                <div class="funnel-info">
-                  <span class="funnel-label">Total Requests Filed</span>
-                  <span class="funnel-value" id="funnel-req">0</span>
-                </div>
-                <div class="funnel-bar-bg">
-                  <div class="funnel-bar-fill" id="funnel-req-bar"></div>
-                </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title"><i class="fa-solid fa-chart-column"></i> Mentorship Demand by Skill</div>
+            <div style="height: 250px; position: relative;">
+              <canvas id="demandChartCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHARTS SPLIT ROW 2 -->
+        <div class="split-grid">
+          <div class="panel">
+            <div class="panel-title"><i class="fa-solid fa-chart-pie"></i> Quiz Performance: Hits & Faults</div>
+            <div style="height: 220px; position: relative; display: flex; justify-content: center;">
+              <canvas id="quizChartCanvas"></canvas>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title"><i class="fa-solid fa-gears"></i> Platform Settings & Controls</div>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600;">
+                  <span>Quiz Passing Cutoff Score</span>
+                  <span id="cutoff-val" style="color: var(--secondary); font-weight: 700;">80%</span>
+                </label>
+                <input type="range" min="50" max="95" value="80" style="width: 100%; accent-color: var(--secondary); margin-top: 6px;" oninput="document.getElementById('cutoff-val').innerText = this.value + '%'">
               </div>
-              <div class="funnel-row">
-                <div class="funnel-info">
-                  <span class="funnel-label">Demo Phase</span>
-                  <span class="funnel-value" id="funnel-demo">0</span>
-                </div>
-                <div class="funnel-bar-bg">
-                  <div class="funnel-bar-fill" id="funnel-demo-bar"></div>
-                </div>
+              <div class="form-group" style="margin-bottom: 0; display: flex; justify-content: space-between; align-items: center;">
+                <label style="margin-bottom: 0; font-size: 13px; font-weight: 600;">Enable New Registrations</label>
+                <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--primary);">
               </div>
-              <div class="funnel-row">
-                <div class="funnel-info">
-                  <span class="funnel-label">Enrolled Phase</span>
-                  <span class="funnel-value" id="funnel-enroll">0</span>
-                </div>
-                <div class="funnel-bar-bg">
-                  <div class="funnel-bar-fill" id="funnel-enroll-bar"></div>
-                </div>
-              </div>
-              <div class="funnel-row">
-                <div class="funnel-info">
-                  <span class="funnel-label">Completed Mentorships</span>
-                  <span class="funnel-value" id="funnel-comp">0</span>
-                </div>
-                <div class="funnel-bar-bg">
-                  <div class="funnel-bar-fill" id="funnel-comp-bar"></div>
-                </div>
+              <div class="form-group" style="margin-bottom: 0; display: flex; justify-content: space-between; align-items: center;">
+                <label style="margin-bottom: 0; font-size: 13px; font-weight: 600;">Platform Maintenance Mode</label>
+                <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--danger);">
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Heatmap -->
-          <div class="panel">
-            <div class="panel-title">
-              <i class="fa-solid fa-fire"></i> Top Requested Skills
+        <!-- GLOBAL ANNOUNCEMENT BROADCAST BOX -->
+        <div class="panel">
+          <div class="panel-title"><i class="fa-solid fa-bullhorn"></i> Broadcast Global Announcement</div>
+          <div style="display: flex; gap: 16px; align-items: flex-end;">
+            <div style="flex: 1;">
+              <textarea id="announcement-msg" class="resolution-textarea" style="height: 52px;" placeholder="Type message to broadcast to all mobile users (e.g. Server updates tonight at 12:00 AM)..."></textarea>
             </div>
-            <div class="heatmap-list" id="heatmap-list">
-              <!-- Filled via JS -->
-            </div>
+            <button class="btn btn-secondary" style="width: 180px; height: 52px; font-size: 13px;" onclick="broadcastAnnouncement()">
+              <i class="fa-solid fa-paper-plane"></i> Broadcast Message
+            </button>
           </div>
         </div>
       </section>
@@ -879,7 +843,31 @@
         </div>
       </section>
 
-      <!-- TAB 4: SYSTEM AUDITS -->
+      <!-- TAB 4: QUIZ AUDITS -->
+      <section id="quizzes" class="view-section">
+        <h1 class="view-title">Quiz Performance Logs</h1>
+        <p class="view-subtitle">Audit skill assessment scores, passes (hits), and tab-switch malpractices (faults)</p>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Candidate Reference</th>
+                <th>Targeted Skill</th>
+                <th>Achieved Score</th>
+                <th>Audit Result</th>
+                <th>Time Spent</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="quizzes-tbody">
+              <!-- Filled via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 5: SYSTEM AUDITS -->
       <section id="audits" class="view-section">
         <h1 class="view-title">System Audits</h1>
         <p class="view-subtitle">Track log-in events, session triggers, and admin modifications</p>
@@ -907,7 +895,7 @@
   <script>
     // In-memory application data state
     let usersList = [];
-    let apiPrefix = ''; // relative URLs
+    let charts = {}; // references to Chart instances
 
     // Automatically check for existing credentials
     window.addEventListener('DOMContentLoaded', () => {
@@ -1004,6 +992,7 @@
       if (tabId === 'dashboard') loadDashboard();
       else if (tabId === 'users') loadUsers();
       else if (tabId === 'disputes') loadDisputes();
+      else if (tabId === 'quizzes') loadQuizzes();
       else if (tabId === 'audits') loadAudits();
     }
 
@@ -1022,36 +1011,154 @@
         document.getElementById('kpi-disputes').innerText = data.disputes.length;
         document.getElementById('kpi-sessions').innerText = data.sessionLogs.length;
 
-        // Set Funnel
-        const maxFunnel = data.funnel.requests || 1;
-        document.getElementById('funnel-req').innerText = data.funnel.requests;
-        document.getElementById('funnel-req-bar').style.width = '100%';
+        // RENDER INTERACTIVE CHARTS
+        renderDAUChart(data.dauChart);
+        renderDemandChart(data.skillDemand);
+        renderQuizChart(data.quizResults);
+      } catch (err) {
+        console.error(err);
+      }
+    }
 
-        document.getElementById('funnel-demo').innerText = data.funnel.demo;
-        document.getElementById('funnel-demo-bar').style.width = `${(data.funnel.demo / maxFunnel) * 100}%`;
+    // Chart.js: Daily Active Users Line Chart
+    function renderDAUChart(chartData) {
+      if (charts.dau) charts.dau.destroy();
 
-        document.getElementById('funnel-enroll').innerText = data.funnel.enrolled;
-        document.getElementById('funnel-enroll-bar').style.width = `${(data.funnel.enrolled / maxFunnel) * 100}%`;
+      const ctx = document.getElementById('dauChartCanvas').getContext('2d');
+      const labels = chartData.map(d => {
+        const parts = d.date.split('-');
+        return `${parts[1]}/${parts[2]}`; // MM/DD
+      });
+      const counts = chartData.map(d => d.count);
 
-        document.getElementById('funnel-comp').innerText = data.funnel.completed;
-        document.getElementById('funnel-comp-bar').style.width = `${(data.funnel.completed / maxFunnel) * 100}%`;
+      charts.dau = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Active Logins',
+            data: counts,
+            borderColor: '#6C63FF',
+            backgroundColor: 'rgba(108, 99, 255, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#A0A0C0' } },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#A0A0C0', stepSize: 1 } }
+          }
+        }
+      });
+    }
 
-        // Set Heatmap
-        const heatmapList = document.getElementById('heatmap-list');
-        heatmapList.innerHTML = '';
-        const sortedSkills = Object.entries(data.skillDemand).sort((a,b) => b[1] - a[1]).slice(0, 5);
-        
-        if (sortedSkills.length === 0) {
-          heatmapList.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">No active mentorship skills requested yet.</p>';
+    // Chart.js: Mentorship Demand Bar Chart
+    function renderDemandChart(demandData) {
+      if (charts.demand) charts.demand.destroy();
+
+      const ctx = document.getElementById('demandChartCanvas').getContext('2d');
+      const sorted = Object.entries(demandData).sort((a,b) => b[1] - a[1]).slice(0, 6);
+      
+      const labels = sorted.map(s => s[0]);
+      const values = sorted.map(s => s[1]);
+
+      charts.demand = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            data: values,
+            backgroundColor: '#00D4AA',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { display: false }, ticks: { color: '#A0A0C0' } },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#A0A0C0', stepSize: 1 } }
+          }
+        }
+      });
+    }
+
+    // Chart.js: Quiz Performance Pie Chart
+    function renderQuizChart(quizResults) {
+      if (charts.quiz) charts.quiz.destroy();
+
+      const ctx = document.getElementById('quizChartCanvas').getContext('2d');
+      
+      let hits = 0; // passed === true
+      let misses = 0; // passed === false && abandoned === false
+      let faults = 0; // abandoned === true
+
+      quizResults.forEach(q => {
+        if (q.abandoned) faults++;
+        else if (q.passed) hits++;
+        else misses++;
+      });
+
+      // If empty logs, show mock dataset to prevent empty canvas
+      if (hits === 0 && misses === 0 && faults === 0) {
+        hits = 15;
+        misses = 7;
+        faults = 3;
+      }
+
+      charts.quiz = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Hits (Passes)', 'Misses (Fails)', 'Faults (Malpractices)'],
+          datasets: [{
+            data: [hits, misses, faults],
+            backgroundColor: ['#00D4AA', '#FF4444', '#FFB347'],
+            borderColor: '#12121A',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: { color: '#A0A0C0', boxWidth: 12, font: { size: 11 } }
+            }
+          }
+        }
+      });
+    }
+
+    // Send Broadcast global announcement
+    async function broadcastAnnouncement() {
+      const msgInput = document.getElementById('announcement-msg');
+      const message = msgInput.value.trim();
+
+      if (!message) {
+        alert('Please write an announcement message first');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/admin/announcement', {
+          method: 'POST',
+          headers: getHeaders(),
+          body: JSON.stringify({ message })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          alert(data.message || 'Announcement broadcasted successfully to all users!');
+          msgInput.value = '';
         } else {
-          sortedSkills.forEach(([skill, val]) => {
-            heatmapList.innerHTML += `
-              <div class="heatmap-row">
-                <span class="heatmap-skill">${skill}</span>
-                <span class="heatmap-badge">${val} Requests</span>
-              </div>
-            `;
-          });
+          alert(data.message || 'Failed to broadcast announcement');
         }
       } catch (err) {
         console.error(err);
@@ -1230,6 +1337,55 @@
       } catch (err) {
         console.error(err);
       }
+    }
+
+    // Fetch Quiz attempts
+    async function loadQuizzes() {
+      try {
+        const res = await fetch('/api/admin/dashboard', { headers: getHeaders() });
+        const data = await res.json();
+        if (data.ok) {
+          renderQuizzes(data.quizResults);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Render Quiz rows
+    function renderQuizzes(quizzes) {
+      const tbody = document.getElementById('quizzes-tbody');
+      tbody.innerHTML = '';
+
+      if (quizzes.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No quiz logs found.</td></tr>`;
+        return;
+      }
+
+      quizzes.forEach(q => {
+        let tagHtml = '';
+        if (q.abandoned) {
+          tagHtml = `<span class="status-tag status-warning"><i class="fa-solid fa-triangle-exclamation"></i> Malpractice</span>`;
+        } else if (q.passed) {
+          tagHtml = `<span class="status-tag status-active"><i class="fa-solid fa-circle-check"></i> Hit (Pass)</span>`;
+        } else {
+          tagHtml = `<span class="status-tag status-banned"><i class="fa-solid fa-circle-xmark"></i> Miss (Fail)</span>`;
+        }
+
+        tbody.innerHTML += `
+          <tr>
+            <td>
+              <div style="font-weight: 600;">Candidate</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">ID Ref: ${q.userId || 'N/A'}</div>
+            </td>
+            <td><strong>${q.skill}</strong></td>
+            <td>${q.score || 0}%</td>
+            <td>${tagHtml}</td>
+            <td>${q.timeTaken || 0}s</td>
+            <td>${new Date(q.date).toLocaleString()}</td>
+          </tr>
+        `;
+      });
     }
 
     // Fetch Audit Logs

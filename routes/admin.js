@@ -13,5 +13,6 @@ router.get('/audits',           c.getAuditLogs);
 router.get('/sessions',         c.getAllSessions);
 router.get('/disputes',         c.getDisputes);
 router.patch('/disputes/:id',   c.resolveDispute);
+router.post('/announcement',    c.sendAnnouncement);
 
 module.exports = router;

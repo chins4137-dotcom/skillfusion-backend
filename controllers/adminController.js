@@ -161,3 +161,30 @@ exports.resolveDispute = async (req, res, next) => {
     res.json({ ok: true, dispute });
   } catch (err) { next(err); }
 };
+
+// POST /api/admin/announcement ───────────────────────────
+exports.sendAnnouncement = async (req, res, next) => {
+  try {
+    const { message } = req.body;
+    if (!message) return res.status(400).json({ message: 'Announcement message required' });
+
+    const users = await User.find({ role: { $ne: 'admin' } });
+    
+    // Broadcast notifications to all users
+    const notifications = users.map(u => ({
+      userId: u._id,
+      type: 'info',
+      message: `📢 Admin Announcement: ${message}`,
+    }));
+    await Notification.insertMany(notifications);
+
+    // Audit log the announcement action
+    await AuditLog.create({
+      userId: req.user._id,
+      action: 'announcement',
+      ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress
+    });
+
+    res.json({ ok: true, message: `Announcement broadcasted to ${users.length} users successfully!` });
+  } catch (err) { next(err); }
+};
