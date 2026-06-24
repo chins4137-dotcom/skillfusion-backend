@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkillFusion — Premium Operator Console</title>
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
+
   <style>
     /* Premium SaaS Design Tokens - Stripe & Linear Inspired */
     :root {
@@ -68,7 +68,7 @@
       position: relative;
     }
 
-    /* Ambient Mesh Floating Background Blobs */
+    /* Ambient Floating Gradient Background Blobs */
     .mesh-blob {
       position: fixed;
       border-radius: 50%;
@@ -99,7 +99,7 @@
       100% { transform: translate(-60px, -80px) scale(0.9); }
     }
 
-    /* Scrollbars */
+    /* Scrollbars Custom Style */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 10px; }
@@ -151,6 +151,80 @@
       letter-spacing: 0.5px;
     }
 
+    .form-group {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .form-input {
+      width: 100%;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      color: #FFF;
+      font-family: var(--font-body);
+      font-size: 14px;
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+
+    .form-input:focus {
+      border-color: var(--primary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background-color: var(--primary);
+      color: #FFF;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+    }
+
+    .btn-secondary:hover {
+      background-color: #00B38F;
+    }
+
+    .login-error {
+      color: var(--danger);
+      font-size: 13px;
+      margin-top: 16px;
+      min-height: 18px;
+      font-weight: 600;
+    }
+
     /* Floating Spotlight Panels Glow (Stripe & Linear Look) */
     .panel, .kpi-card {
       position: relative;
@@ -189,7 +263,7 @@
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
     }
 
-    /* Core UI Elements */
+    /* Core UI Header Elements */
     header {
       background-color: var(--bg-secondary);
       border-bottom: 1px solid var(--border-color);
@@ -240,6 +314,47 @@
       font-family: monospace;
       font-size: 11px;
       color: var(--text-muted);
+    }
+
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .badge-admin {
+      background-color: rgba(108, 99, 255, 0.15);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-logout:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .console-wrapper {
+      flex: 1;
+      display: flex;
+      min-height: 0;
     }
 
     /* Collapsible Sidebar Navigation */
@@ -409,17 +524,10 @@
       letter-spacing: 0.6px;
     }
 
-    /* Grid layout blocks */
+    /* Grid layouts */
     .split-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-
-    .split-3-col {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
       gap: 24px;
       margin-bottom: 24px;
     }
@@ -441,57 +549,92 @@
       color: #FFF;
     }
 
-    /* AI Insights dashboard block */
-    .ai-insights-box {
-      background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.08) 0%, rgba(var(--secondary-rgb), 0.02) 100%);
-      border: 1px solid rgba(var(--primary-rgb), 0.18);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      margin-bottom: 24px;
-      position: relative;
+    /* Funnel list layout */
+    .funnel-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
-    .ai-insights-header {
+    .funnel-row {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .ai-insights-title {
-      font-family: var(--font-display);
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
+      flex-direction: column;
       gap: 8px;
     }
 
-    .ai-insight-dot {
-      width: 8px;
-      height: 8px;
-      background-color: var(--secondary);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--secondary);
-      animation: pulse 2s infinite;
-    }
-
-    .ai-insight-text {
+    .funnel-info {
+      display: flex;
+      justify-content: space-between;
       font-size: 13px;
+      font-weight: 600;
+    }
+
+    .funnel-label {
       color: var(--text-secondary);
-      line-height: 1.6;
     }
 
-    /* Shimmer Skeleton Loaders */
-    @keyframes shimmer {
-      100% { transform: translateX(100%); }
+    .funnel-value {
+      color: #FFF;
+      font-weight: 700;
     }
 
-    .skeleton-wrapper {
+    .funnel-bar-bg {
+      height: 10px;
+      background-color: var(--bg-input);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .funnel-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 5px;
+      width: 0%;
+      transition: width 1.2s cubic-bezier(0.1, 0.8, 0.1, 1);
+    }
+
+    /* Heatmap List */
+    .heatmap-list {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
+    }
+
+    .heatmap-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      background-color: rgba(255, 255, 255, 0.015);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      transition: all var(--transition-fast);
+    }
+
+    .heatmap-row:hover {
+      border-color: var(--primary);
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    .heatmap-skill {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #FFF;
+    }
+
+    .heatmap-badge {
+      background-color: rgba(0, 212, 170, 0.08);
+      border: 1px solid rgba(0, 212, 170, 0.2);
+      color: var(--secondary);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    /* Skeleton Loading Overlay and timers */
+    @keyframes shimmer {
+      100% { transform: translateX(100%); }
     }
 
     .shimmer-block {
@@ -517,7 +660,7 @@
       animation: shimmer 1.5s infinite;
     }
 
-    /* Toast Notification System */
+    /* Toast system styles */
     #toast-container {
       position: fixed;
       top: 32px;
@@ -531,7 +674,7 @@
 
     .toast {
       min-width: 320px;
-      background: rgba(12, 12, 20, 0.9);
+      background: rgba(12, 12, 20, 0.95);
       border: 1px solid var(--border-color);
       box-shadow: var(--shadow-lg);
       padding: 16px 20px;
@@ -652,18 +795,13 @@
     }
 
     /* Filters, Tables & Lists */
-    .filters-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .table-actions {
       margin-bottom: 24px;
-      gap: 16px;
     }
 
     .search-wrapper {
       position: relative;
-      flex: 1;
-      max-width: 380px;
+      max-width: 340px;
     }
 
     .search-wrapper i {
@@ -688,23 +826,6 @@
     }
 
     .search-input:focus {
-      border-color: var(--primary);
-    }
-
-    .select-dropdown {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-secondary);
-      padding: 12px 18px;
-      border-radius: var(--radius-sm);
-      outline: none;
-      font-family: var(--font-body);
-      font-size: 14px;
-      cursor: pointer;
-      transition: border-color var(--transition-fast);
-    }
-
-    .select-dropdown:hover {
       border-color: var(--primary);
     }
 
@@ -750,37 +871,6 @@
       border-bottom: none;
     }
 
-    .avatar-wrapper {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background-color: var(--bg-input);
-      border: 1px solid var(--border-color);
-      font-size: 16px;
-    }
-
-    .skill-chip {
-      background-color: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-color);
-      color: var(--text-secondary);
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .skill-verified {
-      background-color: rgba(0, 212, 170, 0.06);
-      border: 1px solid rgba(0, 212, 170, 0.2);
-      color: var(--secondary);
-    }
-
     .status-tag {
       display: inline-flex;
       align-items: center;
@@ -805,13 +895,6 @@
       color: var(--danger);
     }
 
-    .status-warning {
-      background-color: rgba(255, 179, 71, 0.08);
-      border: 1px solid rgba(255, 179, 71, 0.2);
-      color: var(--warning);
-    }
-
-    /* Actions trigger buttons */
     .action-btn {
       padding: 6px 12px;
       border-radius: var(--radius-sm);
@@ -845,53 +928,6 @@
       background-color: var(--secondary);
       color: #FFF;
       transform: translateY(-1px);
-    }
-
-    /* Real-Time activity feed timeline list */
-    .activity-feed {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      max-height: 480px;
-      overflow-y: auto;
-      padding-right: 8px;
-    }
-
-    .activity-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 12px;
-      border-radius: var(--radius-md);
-      background-color: rgba(255,255,255,0.01);
-      border: 1px solid rgba(255,255,255,0.02);
-      transition: all var(--transition-fast);
-    }
-
-    .activity-item:hover {
-      background-color: rgba(255,255,255,0.03);
-    }
-
-    .activity-icon-box {
-      width: 34px;
-      height: 34px;
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      flex-shrink: 0;
-    }
-
-    .activity-desc {
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .activity-time {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 4px;
     }
 
     /* Disputes list layout */
@@ -943,6 +979,13 @@
       border: 1px solid rgba(255,255,255,0.02);
     }
 
+    .dispute-resolution {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
     .resolution-textarea {
       width: 100%;
       background-color: var(--bg-input);
@@ -977,26 +1020,31 @@
       align-items: center;
       gap: 6px;
     }
+
+    .resolved-content {
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- AMBIENT FLOATING BLOBS -->
+  <!-- AMBIENT BACKGROUND BLOBS -->
   <div class="mesh-blob mesh-blob-1"></div>
   <div class="mesh-blob mesh-blob-2"></div>
 
-  <!-- TOAST ALERTS CONTAINER -->
+  <!-- TOAST NOTIFICATION STACK -->
   <div id="toast-container"></div>
 
-  <!-- COMMAND CENTER SEARCH OVERLAY -->
+  <!-- COMMAND CENTER OVERLAY -->
   <div id="command-overlay" onclick="closeCommandMenu()">
     <div class="command-box" onclick="event.stopPropagation()">
       <div class="command-input-wrapper">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="command-input" class="command-input" placeholder="Type a search or operator command..." oninput="handleCommandSearch()">
+        <input type="text" id="command-input" class="command-input" placeholder="Type a tab name or command action..." oninput="handleCommandSearch()">
       </div>
       <div class="command-results" id="command-results-list">
-        <!-- Filled via JS -->
+        <!-- Results appended via JS -->
       </div>
     </div>
   </div>
@@ -1005,34 +1053,34 @@
   <div id="login-overlay">
     <div class="login-card">
       <div class="login-logo">Skill<span>Fusion</span></div>
-      <div class="login-subtitle">SaaS Operator Command</div>
+      <div class="login-subtitle">Administrator Web Console</div>
       <div class="form-group">
-        <label for="username">Administrator Username</label>
+        <label for="username">Admin Username</label>
         <input type="text" id="username" class="form-input" placeholder="e.g. admin" value="admin">
       </div>
       <div class="form-group">
-        <label for="password">Security Password</label>
+        <label for="password">Password</label>
         <input type="password" id="password" class="form-input" placeholder="••••••••" value="admin123">
       </div>
       <button class="btn" id="btn-login" onclick="handleLogin()">
-        <i class="fa-solid fa-shield-halved"></i> Authenticate Console
+        <i class="fa-solid fa-lock-open"></i> Login to Console
       </button>
       <div class="login-error" id="login-error"></div>
     </div>
   </div>
 
-  <!-- CORE CONSOLE NAV HEADER -->
+  <!-- MAIN OPERATOR HEADER -->
   <header>
-    <div class="header-logo" onclick="switchTab('dashboard', document.querySelector('.nav-item'))">Skill<span>Fusion</span> Console</div>
+    <div class="header-logo" onclick="switchTab('dashboard', document.querySelector('.nav-item'))">Skill<span>Fusion</span> Admin</div>
     <div class="header-center-search" onclick="openCommandMenu()">
       <i class="fa-solid fa-terminal"></i>
       <span>Press keys to search...</span>
       <span style="margin-left: auto;" class="cmd-badge">Ctrl K</span>
     </div>
     <div class="header-user">
-      <span class="badge-admin">Platform Operator</span>
+      <span class="badge-admin">Root Administrator</span>
       <button class="btn-logout" onclick="handleLogout()">
-        <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
       </button>
     </div>
   </header>
@@ -1040,41 +1088,26 @@
   <div class="console-wrapper">
     <aside id="console-sidebar">
       <div class="nav-item active" onclick="switchTab('dashboard', this)">
-        <i class="fa-solid fa-chart-line"></i> <span>Dashboard</span>
+        <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
       </div>
       <div class="nav-item" onclick="switchTab('users', this)">
-        <i class="fa-solid fa-user-shield"></i> <span>User Moderation</span>
-      </div>
-      <div class="nav-item" onclick="switchTab('mentorships', this)">
-        <i class="fa-solid fa-handshake"></i> <span>Mentorships</span>
-      </div>
-      <div class="nav-item" onclick="switchTab('vault', this)">
-        <i class="fa-solid fa-vault"></i> <span>Learning Vault</span>
-      </div>
-      <div class="nav-item" onclick="switchTab('quizzes', this)">
-        <i class="fa-solid fa-square-poll-vertical"></i> <span>Quiz Analytics</span>
+        <i class="fa-solid fa-users"></i> <span>Users Moderation</span>
       </div>
       <div class="nav-item" onclick="switchTab('disputes', this)">
-        <i class="fa-solid fa-triangle-exclamation"></i> <span>Disputes Center</span>
+        <i class="fa-solid fa-circle-exclamation"></i> <span>Disputes</span>
       </div>
-      <div class="nav-item" onclick="switchTab('announcements', this)">
-        <i class="fa-solid fa-bullhorn"></i> <span>Global Broadcasts</span>
-      </div>
-      <div class="nav-item" onclick="switchTab('leaderboard', this)">
-        <i class="fa-solid fa-trophy"></i> <span>Leaderboards & XP</span>
-      </div>
-      <div class="nav-item" onclick="switchTab('config', this)">
-        <i class="fa-solid fa-sliders"></i> <span>Platform Settings</span>
+      <div class="nav-item" onclick="switchTab('audits', this)">
+        <i class="fa-solid fa-receipt"></i> <span>System Audits</span>
       </div>
 
-      <!-- Collapsible trigger -->
+      <!-- Collapsed toggle trigger -->
       <button class="sidebar-toggle" onclick="toggleSidebar()">
         <i class="fa-solid fa-chevron-left" id="toggle-icon"></i>
       </button>
     </aside>
 
     <main>
-      <!-- SKELETON LOADER CONTAINER -->
+      <!-- PULSING SKELETON WIREFRAME -->
       <div id="skeleton-loader" style="display: none;">
         <h1 class="view-title shimmer-block" style="width: 250px; height: 32px;"></h1>
         <p class="view-subtitle shimmer-block" style="width: 350px; height: 18px; margin-bottom: 36px;"></p>
@@ -1084,132 +1117,145 @@
           <div class="panel shimmer-block" style="height: 120px;"></div>
           <div class="panel shimmer-block" style="height: 120px;"></div>
         </div>
-        <div class="split-3-col">
-          <div class="skeleton-wrapper">
-            <div class="panel shimmer-block" style="height: 250px;"></div>
-            <div class="panel shimmer-block" style="height: 250px;"></div>
-          </div>
-          <div class="panel shimmer-block" style="height: 520px;"></div>
+        <div class="split-grid">
+          <div class="panel shimmer-block" style="height: 380px;"></div>
+          <div class="panel shimmer-block" style="height: 380px;"></div>
         </div>
       </div>
 
-      <!-- ACTUAL WORK VIEWS -->
       <div id="main-content-views">
-        <!-- TAB 1: DASHBOARD -->
+        <!-- VIEW 1: DASHBOARD -->
         <section id="dashboard" class="view-section active">
-          <h1 class="view-title">System Metrics</h1>
-          <p class="view-subtitle">High-level platform activity, analytics, and diagnostics</p>
-          
+          <h1 class="view-title">System Overview</h1>
+          <p class="view-subtitle">High-level metrics and platform funnel analysis</p>
+
           <div class="kpi-grid">
             <div class="kpi-card">
               <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
               <div class="kpi-info">
                 <span class="kpi-value" id="kpi-users">0</span>
-                <span class="kpi-label">Active Accounts</span>
+                <span class="kpi-label">Registered Users</span>
               </div>
             </div>
             <div class="kpi-card">
               <div class="kpi-icon"><i class="fa-solid fa-graduation-cap"></i></div>
               <div class="kpi-info">
                 <span class="kpi-value" id="kpi-mentorships">0</span>
-                <span class="kpi-label">Active Pairings</span>
+                <span class="kpi-label">Mentorships</span>
               </div>
             </div>
             <div class="kpi-card">
-              <div class="kpi-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+              <div class="kpi-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
               <div class="kpi-info">
                 <span class="kpi-value" id="kpi-disputes">0</span>
-                <span class="kpi-label">Open Conflicts</span>
+                <span class="kpi-label">Open Disputes</span>
               </div>
             </div>
             <div class="kpi-card">
-              <div class="kpi-icon"><i class="fa-solid fa-play"></i></div>
+              <div class="kpi-icon"><i class="fa-solid fa-circle-play"></i></div>
               <div class="kpi-info">
                 <span class="kpi-value" id="kpi-sessions">0</span>
-                <span class="kpi-label">Completed Classes</span>
+                <span class="kpi-label">Active Sessions</span>
               </div>
             </div>
           </div>
 
-          <div class="split-3-col">
-            <div>
-              <div class="ai-insights-box">
-                <div class="ai-insights-header">
-                  <span class="ai-insights-title"><i class="fa-solid fa-microchip"></i> AI Platform Analytics Engine</span>
-                  <span class="ai-insight-dot"></span>
-                </div>
-                <div class="ai-insight-text" id="ai-insights-text">
-                  Analyzing database tables... Loading recommendations based on student-mentor ratios and skill metrics.
-                </div>
+          <!-- Charts visualization row -->
+          <div class="split-grid" style="margin-bottom: 24px;">
+            <div class="panel">
+              <div class="panel-title"><i class="fa-solid fa-chart-area"></i> Signups & Daily Active Users</div>
+              <div style="height: 250px; position: relative;">
+                <canvas id="dauChartCanvas"></canvas>
               </div>
+            </div>
+            <div class="panel">
+              <div class="panel-title"><i class="fa-solid fa-chart-pie"></i> Users Role Distribution</div>
+              <div style="height: 250px; position: relative; display: flex; justify-content: center;">
+                <canvas id="balanceChartCanvas"></canvas>
+              </div>
+            </div>
+          </div>
 
-              <div class="split-grid">
-                <div class="panel">
-                  <div class="panel-title"><i class="fa-solid fa-chart-area"></i> Signups & Daily Logins</div>
-                  <div style="height: 220px; position: relative;">
-                    <canvas id="dauChartCanvas"></canvas>
-                  </div>
-                </div>
-                <div class="panel">
-                  <div class="panel-title"><i class="fa-solid fa-chart-bar"></i> Skill Demand vs Verified Mentors</div>
-                  <div style="height: 220px; position: relative;">
-                    <canvas id="demandChartCanvas"></canvas>
-                  </div>
-                </div>
+          <div class="split-grid">
+            <!-- Funnel -->
+            <div class="panel">
+              <div class="panel-title">
+                <i class="fa-solid fa-filter"></i> Enrollment Funnel
               </div>
-              
-              <div class="split-grid">
-                <div class="panel">
-                  <div class="panel-title"><i class="fa-solid fa-chart-pie"></i> Quiz Outcome Audit Breakdown</div>
-                  <div style="height: 200px; position: relative; display: flex; justify-content: center;">
-                    <canvas id="quizChartCanvas"></canvas>
+              <div class="funnel-list">
+                <div class="funnel-row">
+                  <div class="funnel-info">
+                    <span class="funnel-label">Total Requests Filed</span>
+                    <span class="funnel-value" id="funnel-req">0</span>
+                  </div>
+                  <div class="funnel-bar-bg">
+                    <div class="funnel-bar-fill" id="funnel-req-bar"></div>
                   </div>
                 </div>
-                <div class="panel">
-                  <div class="panel-title"><i class="fa-solid fa-chart-pie"></i> Student / Mentor Balance</div>
-                  <div style="height: 200px; position: relative; display: flex; justify-content: center;">
-                    <canvas id="balanceChartCanvas"></canvas>
+                <div class="funnel-row">
+                  <div class="funnel-info">
+                    <span class="funnel-label">Demo Phase</span>
+                    <span class="funnel-value" id="funnel-demo">0</span>
+                  </div>
+                  <div class="funnel-bar-bg">
+                    <div class="funnel-bar-fill" id="funnel-demo-bar"></div>
+                  </div>
+                </div>
+                <div class="funnel-row">
+                  <div class="funnel-info">
+                    <span class="funnel-label">Enrolled Phase</span>
+                    <span class="funnel-value" id="funnel-enroll">0</span>
+                  </div>
+                  <div class="funnel-bar-bg">
+                    <div class="funnel-bar-fill" id="funnel-enroll-bar"></div>
+                  </div>
+                </div>
+                <div class="funnel-row">
+                  <div class="funnel-info">
+                    <span class="funnel-label">Completed Mentorships</span>
+                    <span class="funnel-value" id="funnel-comp">0</span>
+                  </div>
+                  <div class="funnel-bar-bg">
+                    <div class="funnel-bar-fill" id="funnel-comp-bar"></div>
                   </div>
                 </div>
               </div>
             </div>
 
+            <!-- Heatmap list -->
             <div class="panel">
-              <div class="panel-title"><i class="fa-solid fa-wave-square"></i> Real-Time Audit Feed</div>
-              <div class="activity-feed" id="activity-feed-list">
+              <div class="panel-title">
+                <i class="fa-solid fa-fire"></i> Top Requested Skills
+              </div>
+              <div class="heatmap-list" id="heatmap-list">
                 <!-- Filled via JS -->
               </div>
             </div>
           </div>
         </section>
 
-        <!-- TAB 2: USER MODERATION -->
+        <!-- VIEW 2: USERS MODERATION -->
         <section id="users" class="view-section">
-          <h1 class="view-title">User Accounts</h1>
-          <p class="view-subtitle">Manage student and mentor credentials, bans, and skill verifications</p>
-          
-          <div class="filters-bar">
+          <h1 class="view-title">User Moderation</h1>
+          <p class="view-subtitle">Manage accounts, verify profiles, and handle bans</p>
+
+          <div class="table-actions">
             <div class="search-wrapper">
               <i class="fa-solid fa-magnifying-glass"></i>
-              <input type="text" id="user-search" class="search-input" placeholder="Search by name, email, or username..." oninput="filterUsers()">
+              <input type="text" id="user-search" class="search-input" placeholder="Search by name or username..." oninput="filterUsers()">
             </div>
-            <select id="user-role-filter" class="select-dropdown" onchange="filterUsers()">
-              <option value="all">All Roles</option>
-              <option value="student">Students</option>
-              <option value="mentor">Mentors</option>
-            </select>
           </div>
 
           <div class="table-responsive">
             <table>
               <thead>
                 <tr>
-                  <th>Member Profile</th>
-                  <th>Contact Details</th>
-                  <th>Role Context</th>
-                  <th>Skills & Verifications</th>
+                  <th>Name / Username</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>XP Points</th>
                   <th>Account Status</th>
-                  <th>Actions & Tools</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody id="users-tbody">
@@ -1219,101 +1265,7 @@
           </div>
         </section>
 
-        <!-- TAB 3: MENTORSHIPS & SESSIONS -->
-        <section id="mentorships" class="view-section">
-          <h1 class="view-title">Mentorship Pairings & Sessions</h1>
-          <p class="view-subtitle">Monitor interactive pairings, lesson histories, and class schedules</p>
-
-          <div class="panel" style="margin-bottom: 24px;">
-            <div class="panel-title"><i class="fa-solid fa-handshake"></i> Active Mentorship Pairings</div>
-            <div class="table-responsive">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Mentor</th>
-                    <th>Student Partner</th>
-                    <th>Skill Subject</th>
-                    <th>Stage Level</th>
-                    <th>Created Date</th>
-                  </tr>
-                </thead>
-                <tbody id="mentorships-tbody">
-                  <!-- Filled via JS -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="panel">
-            <div class="panel-title"><i class="fa-solid fa-video"></i> Live Booking Schedules</div>
-            <div class="table-responsive">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Skill Subject</th>
-                    <th>Assigned Mentor</th>
-                    <th>Meeting Link / Details</th>
-                    <th>Duration</th>
-                    <th>Date & Time</th>
-                  </tr>
-                </thead>
-                <tbody id="sessions-tbody">
-                  <!-- Filled via JS -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <!-- TAB 4: LEARNING VAULT -->
-        <section id="vault" class="view-section">
-          <h1 class="view-title">Resource Vault</h1>
-          <p class="view-subtitle">Review, monitor, and remove learning guides and links uploaded by users</p>
-
-          <div class="table-responsive">
-            <table>
-              <thead>
-                <tr>
-                  <th>Resource Detail</th>
-                  <th>Link Context</th>
-                  <th>Subject Topic</th>
-                  <th>Uploaded By</th>
-                  <th>Uploaded Date</th>
-                  <th>Administrative Options</th>
-                </tr>
-              </thead>
-              <tbody id="vault-tbody">
-                <!-- Filled via JS -->
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- TAB 5: QUIZ ANALYTICS -->
-        <section id="quizzes" class="view-section">
-          <h1 class="view-title">Quiz Performance Logs</h1>
-          <p class="view-subtitle">Audit skill assessment scores, passes (hits), and tab-switch malpractices (faults)</p>
-
-          <div class="table-responsive">
-            <table>
-              <thead>
-                <tr>
-                  <th>Candidate Reference</th>
-                  <th>Targeted Skill</th>
-                  <th>Achieved Score</th>
-                  <th>Audit Result</th>
-                  <th>Time Spent</th>
-                  <th>Timestamp</th>
-                </tr>
-              </thead>
-              <tbody id="quizzes-tbody">
-                <!-- Filled via JS -->
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- TAB 6: DISPUTES -->
+        <!-- VIEW 3: DISPUTES -->
         <section id="disputes" class="view-section">
           <h1 class="view-title">Disputes Center</h1>
           <p class="view-subtitle">Review, investigate, and resolve learning disputes</p>
@@ -1323,103 +1275,32 @@
           </div>
         </section>
 
-        <!-- TAB 7: ANNOUNCEMENTS -->
-        <section id="announcements" class="view-section">
-          <h1 class="view-title">Broadcast Center</h1>
-          <p class="view-subtitle">Broadcast global notification warnings to all registered mobile app feeds</p>
+        <!-- VIEW 4: SYSTEM AUDITS -->
+        <section id="audits" class="view-section">
+          <h1 class="view-title">System Audits</h1>
+          <p class="view-subtitle">Track log-in events, session triggers, and admin modifications</p>
 
-          <div class="panel" style="max-width: 680px;">
-            <div class="panel-title"><i class="fa-solid fa-bullhorn"></i> Send Push Announcement Campaign</div>
-            <div class="form-group">
-              <label for="announcement-msg">Broadcast Alert Message</label>
-              <textarea id="announcement-msg" class="resolution-textarea" style="height: 120px;" placeholder="Type broadcast message (e.g. Server updates tonight at 12:00 AM, please save your logs)..."></textarea>
-            </div>
-            <button class="btn btn-secondary" onclick="broadcastAnnouncement()">
-              <i class="fa-solid fa-paper-plane"></i> Broadcast Message
-            </button>
-          </div>
-        </section>
-
-        <!-- TAB 8: LEADERBOARD & XP -->
-        <section id="leaderboard" class="view-section">
-          <h1 class="view-title">Leaderboards & Gamification</h1>
-          <p class="view-subtitle">Audit system XP allocations and leaderboard standings</p>
-
-          <div class="panel" style="max-width: 720px;">
-            <div class="panel-title"><i class="fa-solid fa-ranking-star"></i> Global User Standings</div>
-            <div class="table-responsive">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Rank Placement</th>
-                    <th>Member Name</th>
-                    <th>Role Context</th>
-                    <th>Accumulated Experience</th>
-                  </tr>
-                </thead>
-                <tbody id="leaderboard-tbody">
-                  <!-- Filled via JS -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <!-- TAB 9: PLATFORM SETTINGS -->
-        <section id="config" class="view-section">
-          <h1 class="view-title">Platform Controls</h1>
-          <p class="view-subtitle">Adjust core app policies, threshold rates, and server states</p>
-
-          <div class="split-grid" style="max-width: 900px;">
-            <div class="panel">
-              <div class="panel-title"><i class="fa-solid fa-sliders"></i> Skill Validation Settings</div>
-              <div style="display: flex; flex-direction: column; gap: 24px;">
-                <div class="form-group" style="margin-bottom: 0;">
-                  <label style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600;">
-                    <span>Quiz Passing Score Cutoff</span>
-                    <span id="cutoff-val" style="color: var(--secondary); font-weight: 700;">80%</span>
-                  </label>
-                  <input type="range" min="50" max="95" value="80" class="form-slider" style="margin-top: 10px;" oninput="document.getElementById('cutoff-val').innerText = this.value + '%'">
-                </div>
-                <div class="form-group" style="margin-bottom: 0; display: flex; justify-content: space-between; align-items: center;">
-                  <label style="margin-bottom: 0; font-size: 13px; font-weight: 600;">Enable New Registrations</label>
-                  <input type="checkbox" checked style="width: 20px; height: 20px; accent-color: var(--primary);">
-                </div>
-                <div class="form-group" style="margin-bottom: 0; display: flex; justify-content: space-between; align-items: center;">
-                  <label style="margin-bottom: 0; font-size: 13px; font-weight: 600;">Platform Maintenance Mode</label>
-                  <input type="checkbox" style="width: 20px; height: 20px; accent-color: var(--danger);">
-                </div>
-              </div>
-            </div>
-
-            <div class="panel">
-              <div class="panel-title"><i class="fa-solid fa-server"></i> API Infrastructure & Diagnostics</div>
-              <div style="display: flex; flex-direction: column; gap: 16px; font-size: 13px;">
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
-                  <span style="color: var(--text-secondary);">Database Cluster State:</span>
-                  <span style="color: var(--secondary); font-weight: 700;"><i class="fa-solid fa-circle-check"></i> Connected</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
-                  <span style="color: var(--text-secondary);">API Engine Environment:</span>
-                  <span style="font-family: monospace; color: var(--primary);">production (vercel)</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
-                  <span style="color: var(--text-secondary);">Active Session Handlers:</span>
-                  <span style="color: #FFF;">Express.js / WebSocket Ready</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; padding-bottom: 4px;">
-                  <span style="color: var(--text-secondary);">Server Response Latency:</span>
-                  <span style="color: var(--secondary); font-weight: 700;">12ms</span>
-                </div>
-              </div>
-            </div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>User Reference</th>
+                  <th>Logged Action</th>
+                  <th>IP Address</th>
+                  <th>Time & Date</th>
+                </tr>
+              </thead>
+              <tbody id="audits-tbody">
+                <!-- Filled via JS -->
+              </tbody>
+            </table>
           </div>
         </section>
       </div>
     </main>
   </div>
 
-  <!-- JAVASCRIPT APP CONTROL LOGIC -->
+  <!-- JAVASCRIPT CONTROLLERS -->
   <script>
     let usersList = [];
     let charts = {};
@@ -1427,12 +1308,13 @@
     window.addEventListener('DOMContentLoaded', () => {
       const token = localStorage.getItem('token');
       const userRole = localStorage.getItem('userRole');
+
       if (token && userRole === 'admin') {
         document.getElementById('login-overlay').style.display = 'none';
         loadDashboard();
       }
 
-      // Initialize Mouse Spotlight tracking on all panels
+      // Cursor movement dynamic spotlight tracking
       document.addEventListener('mousemove', e => {
         const panels = document.querySelectorAll('.panel, .kpi-card');
         panels.forEach(panel => {
@@ -1444,7 +1326,7 @@
         });
       });
 
-      // Keyboard Shortcut listener for Command Menu (Ctrl + K)
+      // Bind Cmd/Ctrl+K Keyboard shortcuts
       document.addEventListener('keydown', e => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
           e.preventDefault();
@@ -1453,7 +1335,7 @@
       });
     });
 
-    // Toast Notification spawner
+    // Spawns a premium glassmorphic toast notification
     function showToast(message, type = 'success') {
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
@@ -1471,14 +1353,26 @@
 
       container.appendChild(toast);
 
-      // Slide out and remove toast after 3 seconds
       setTimeout(() => {
         toast.classList.add('hide');
         setTimeout(() => toast.remove(), 300);
       }, 3000);
     }
 
-    // Command Center Open/Close
+    // Toggle Collapsed Sidebar transition
+    function toggleSidebar() {
+      const sidebar = document.getElementById('console-sidebar');
+      const icon = document.getElementById('toggle-icon');
+      sidebar.classList.toggle('collapsed');
+      
+      if (sidebar.classList.contains('collapsed')) {
+        icon.className = 'fa-solid fa-chevron-right';
+      } else {
+        icon.className = 'fa-solid fa-chevron-left';
+      }
+    }
+
+    // Command menu helper triggers
     function openCommandMenu() {
       const overlay = document.getElementById('command-overlay');
       overlay.style.display = 'flex';
@@ -1492,29 +1386,23 @@
       document.getElementById('command-overlay').style.display = 'none';
     }
 
-    // Command Search logic
-    const commandsList = [
-      { text: 'Go to Dashboard', action: () => switchTab('dashboard', document.querySelectorAll('.nav-item')[0]) },
-      { text: 'Go to User Moderation', action: () => switchTab('users', document.querySelectorAll('.nav-item')[1]) },
-      { text: 'Go to Mentorship Pairings', action: () => switchTab('mentorships', document.querySelectorAll('.nav-item')[2]) },
-      { text: 'Go to Learning Vault', action: () => switchTab('vault', document.querySelectorAll('.nav-item')[3]) },
-      { text: 'Go to Quiz Analytics', action: () => switchTab('quizzes', document.querySelectorAll('.nav-item')[4]) },
-      { text: 'Go to Disputes Center', action: () => switchTab('disputes', document.querySelectorAll('.nav-item')[5]) },
-      { text: 'Go to Broadcast Announcements', action: () => switchTab('announcements', document.querySelectorAll('.nav-item')[6]) },
-      { text: 'Go to Leaderboards & XP Logs', action: () => switchTab('leaderboard', document.querySelectorAll('.nav-item')[7]) },
-      { text: 'Go to Platform Settings', action: () => switchTab('config', document.querySelectorAll('.nav-item')[8]) },
-      { text: 'Sign Out / Logout', action: () => handleLogout() }
+    const commandList = [
+      { text: 'Switch to Dashboard Overview', action: () => switchTab('dashboard', document.querySelectorAll('.nav-item')[0]) },
+      { text: 'Switch to User Moderation', action: () => switchTab('users', document.querySelectorAll('.nav-item')[1]) },
+      { text: 'Switch to Disputes Resolver', action: () => switchTab('disputes', document.querySelectorAll('.nav-item')[2]) },
+      { text: 'Switch to System Audits Log', action: () => switchTab('audits', document.querySelectorAll('.nav-item')[3]) },
+      { text: 'Sign Out Session', action: () => handleLogout() }
     ];
 
     function handleCommandSearch() {
       const query = document.getElementById('command-input').value.toLowerCase().trim();
-      const list = document.getElementById('command-results-list');
-      list.innerHTML = '';
+      const results = document.getElementById('command-results-list');
+      results.innerHTML = '';
 
-      const filtered = commandsList.filter(cmd => cmd.text.toLowerCase().includes(query));
+      const filtered = commandList.filter(cmd => cmd.text.toLowerCase().includes(query));
 
       if (filtered.length === 0) {
-        list.innerHTML = `<div style="padding: 12px; color: var(--text-muted); font-size: 13px;">No commands match query.</div>`;
+        results.innerHTML = `<div style="padding: 12px; color: var(--text-muted); font-size: 13px;">No actions matched query.</div>`;
         return;
       }
 
@@ -1523,30 +1411,17 @@
         div.className = 'command-item';
         div.innerHTML = `
           <span>${cmd.text}</span>
-          <span style="font-size: 10px; color: var(--text-muted);">Tab Action <i class="fa-solid fa-arrow-right"></i></span>
+          <span style="font-size: 10px; color: var(--text-muted);">Trigger Action <i class="fa-solid fa-arrow-right-long"></i></span>
         `;
         div.onclick = () => {
           cmd.action();
           closeCommandMenu();
         };
-        list.appendChild(div);
+        results.appendChild(div);
       });
     }
 
-    // Toggle Collapsed Sidebar
-    function toggleSidebar() {
-      const sidebar = document.getElementById('console-sidebar');
-      const icon = document.getElementById('toggle-icon');
-      sidebar.classList.toggle('collapsed');
-      
-      if (sidebar.classList.contains('collapsed')) {
-        icon.className = 'fa-solid fa-chevron-right';
-      } else {
-        icon.className = 'fa-solid fa-chevron-left';
-      }
-    }
-
-    // Count-up Numeric Animation helper
+    // Number counters count-up animation function
     function animateCounter(id, start, end, duration) {
       if (start === end) return;
       const range = end - start;
@@ -1564,7 +1439,7 @@
       }, Math.max(stepTime, 20));
     }
 
-    // Authenticate Admin Credentials
+    // Authenticate Administrator login
     async function handleLogin() {
       const uInput = document.getElementById('username').value.trim();
       const pInput = document.getElementById('password').value;
@@ -1572,7 +1447,7 @@
       errorDiv.innerText = '';
 
       if (!uInput || !pInput) {
-        errorDiv.innerText = 'All credentials required';
+        errorDiv.innerText = 'Please enter both credentials';
         return;
       }
 
@@ -1584,7 +1459,7 @@
         });
 
         const data = await response.json();
-        
+
         if (!response.ok) {
           errorDiv.innerText = data.message || 'Login failed';
           return;
@@ -1597,26 +1472,27 @@
 
         localStorage.setItem('token', data.token);
         localStorage.setItem('userRole', data.user.role);
-        
+
         document.getElementById('login-overlay').style.opacity = 0;
         setTimeout(() => {
           document.getElementById('login-overlay').style.display = 'none';
         }, 400);
-        
-        showToast('System session authenticated successfully', 'success');
+
+        showToast('Console session authenticated successfully', 'success');
         loadDashboard();
       } catch (err) {
         console.error(err);
-        errorDiv.innerText = 'API host unreachable.';
+        errorDiv.innerText = 'Server unreachable. Try running local backend.';
       }
     }
 
-    // Handle Log out
+    // End operator session
     function handleLogout() {
       localStorage.removeItem('token');
       localStorage.removeItem('userRole');
       document.getElementById('login-overlay').style.opacity = 1;
       document.getElementById('login-overlay').style.display = 'flex';
+
       document.getElementById('username').value = '';
       document.getElementById('password').value = '';
       document.getElementById('login-error').innerText = '';
@@ -1630,99 +1506,91 @@
       };
     }
 
-    // Switch Tabs in Sidebar (Includes Skeleton Loader effects)
+    // Switch Tabs inside Sidebar navigation (Triggers shimmer placeholders)
     function switchTab(tabId, el) {
       document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
       el.classList.add('active');
 
-      const viewsWrapper = document.getElementById('main-content-views');
+      const contentSection = document.getElementById('main-content-views');
       const loader = document.getElementById('skeleton-loader');
 
-      // Trigger Loader Shimmer overlay
-      viewsWrapper.style.display = 'none';
+      contentSection.style.display = 'none';
       loader.style.display = 'block';
 
       setTimeout(() => {
         loader.style.display = 'none';
-        viewsWrapper.style.display = 'block';
+        contentSection.style.display = 'block';
 
         document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
 
         if (tabId === 'dashboard') loadDashboard();
         else if (tabId === 'users') loadUsers();
-        else if (tabId === 'mentorships') loadMentorshipsAndSessions();
-        else if (tabId === 'vault') loadVaultResources();
-        else if (tabId === 'quizzes') loadQuizzes();
         else if (tabId === 'disputes') loadDisputes();
-        else if (tabId === 'leaderboard') loadLeaderboardData();
+        else if (tabId === 'audits') loadAudits();
       }, 350);
     }
 
-    // Tab Loader: Dashboard stats
+    // Fetch Dashboard data & load counters / graphs
     async function loadDashboard() {
       try {
         const res = await fetch('/api/admin/dashboard', { headers: getHeaders() });
         if (res.status === 401 || res.status === 403) return handleLogout();
-        
+
         const data = await res.json();
         if (!data.ok) return;
 
         usersList = data.users;
 
-        // Perform Count-up animations for KPIs
+        // Perform Count-up animation on KPI metrics
         animateCounter('kpi-users', 0, data.users.length, 600);
         animateCounter('kpi-mentorships', 0, data.mentorships.length, 600);
         animateCounter('kpi-disputes', 0, data.disputes.length, 600);
         animateCounter('kpi-sessions', 0, data.sessionLogs.length, 600);
 
-        renderDAUChart(data.dauChart);
-        renderDemandChart(data.skillDemand);
-        renderQuizChart(data.quizResults);
-        renderBalanceChart(data.users);
+        // Render dynamic funnel metrics
+        const maxFunnel = data.funnel.requests || 1;
+        document.getElementById('funnel-req').innerText = data.funnel.requests;
+        document.getElementById('funnel-req-bar').style.width = '100%';
 
-        generateAIRecommendations(data);
-        renderActivityFeed(data.logs);
+        document.getElementById('funnel-demo').innerText = data.funnel.demo;
+        document.getElementById('funnel-demo-bar').style.width = `${(data.funnel.demo / maxFunnel) * 100}%`;
+
+        document.getElementById('funnel-enroll').innerText = data.funnel.enrolled;
+        document.getElementById('funnel-enroll-bar').style.width = `${(data.funnel.enrolled / maxFunnel) * 100}%`;
+
+        document.getElementById('funnel-comp').innerText = data.funnel.completed;
+        document.getElementById('funnel-comp-bar').style.width = `${(data.funnel.completed / maxFunnel) * 100}%`;
+
+        // Render Top Skills heatmap
+        const heatmapList = document.getElementById('heatmap-list');
+        heatmapList.innerHTML = '';
+        const sortedSkills = Object.entries(data.skillDemand).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+        if (sortedSkills.length === 0) {
+          heatmapList.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">No mentorship skill demands registered.</p>';
+        } else {
+          sortedSkills.forEach(([skill, val]) => {
+            heatmapList.innerHTML += `
+              <div class="heatmap-row">
+                <span class="heatmap-skill">${skill}</span>
+                <span class="heatmap-badge">${val} Requests</span>
+              </div>
+            `;
+          });
+        }
+
+        // Render Chart.js widgets
+        renderDAUChart(data.dauChart);
+        renderBalanceChart(data.users);
       } catch (err) {
         console.error(err);
       }
     }
 
-    // Dynamic AI Recommendation block
-    function generateAIRecommendations(data) {
-      const textDiv = document.getElementById('ai-insights-text');
-      
-      const mentors = data.users.filter(u => u.role === 'mentor').length;
-      const students = data.users.filter(u => u.role === 'student').length;
-      const quizAttempts = data.quizResults.length;
-      const malpracticeFaults = data.quizResults.filter(q => q.abandoned).length;
-
-      let insights = [];
-
-      if (mentors > 0 && students / mentors > 4) {
-        insights.push(`⚠️ <strong>Capacity Constraint Alert:</strong> Student-to-mentor ratio is high (${(students/mentors).toFixed(1)}:1). Consider verifying pending mentor applicants to reduce load.`);
-      } else {
-        insights.push(`✅ <strong>Distribution Health:</strong> Student-mentor ratio is balanced (${(students/mentors || 0).toFixed(1)}:1).`);
-      }
-
-      if (quizAttempts > 0) {
-        const faultPercent = ((malpracticeFaults / quizAttempts) * 100).toFixed(0);
-        if (faultPercent > 15) {
-          insights.push(`⚠️ <strong>Malpractice Detection Alert:</strong> High quiz abort rate (${faultPercent}%). Users are switching tabs. Consider adjusting malpractice thresholds in Settings.`);
-        }
-      }
-
-      const skills = Object.entries(data.skillDemand).sort((a,b) => b[1] - a[1]);
-      if (skills.length > 0) {
-        insights.push(`💡 <strong>Skill Demand Insight:</strong> The subject "<strong>${skills[0][0]}</strong>" has the highest mentorship requests (${skills[0][1]} active requests).`);
-      }
-
-      textDiv.innerHTML = insights.map(i => `<p style="margin-bottom: 10px;">${i}</p>`).join('');
-    }
-
-    // Chart.js styles presets (Stripe aesthetics)
-    const chartGridColor = 'rgba(255, 255, 255, 0.02)';
-    const chartTickColor = '#6B7280';
+    // Chart.js themes & layout style configurations
+    const gridStyle = 'rgba(255, 255, 255, 0.02)';
+    const tickStyle = '#9CA3AF';
 
     function renderDAUChart(chartData) {
       if (charts.dau) charts.dau.destroy();
@@ -1748,79 +1616,8 @@
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { grid: { color: chartGridColor }, ticks: { color: chartTickColor } },
-            y: { grid: { color: chartGridColor }, ticks: { color: chartTickColor, stepSize: 1 } }
-          }
-        }
-      });
-    }
-
-    function renderDemandChart(demandData) {
-      if (charts.demand) charts.demand.destroy();
-      const ctx = document.getElementById('demandChartCanvas').getContext('2d');
-      const sorted = Object.entries(demandData).sort((a,b) => b[1] - a[1]).slice(0, 5);
-      const labels = sorted.map(s => s[0]);
-      const values = sorted.map(s => s[1]);
-
-      charts.demand = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels,
-          datasets: [{
-            data: values,
-            backgroundColor: 'rgba(0, 212, 170, 0.7)',
-            borderColor: '#00D4AA',
-            borderWidth: 1,
-            borderRadius: 4
-          }]
-        },
-        options: {
-          indexAxis: 'y',
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { color: chartGridColor }, ticks: { color: chartTickColor, stepSize: 1 } },
-            y: { grid: { display: false }, ticks: { color: chartTickColor } }
-          }
-        }
-      });
-    }
-
-    function renderQuizChart(quizResults) {
-      if (charts.quiz) charts.quiz.destroy();
-      const ctx = document.getElementById('quizChartCanvas').getContext('2d');
-      
-      let hits = 0, misses = 0, faults = 0;
-      quizResults.forEach(q => {
-        if (q.abandoned) faults++;
-        else if (q.passed) hits++;
-        else misses++;
-      });
-
-      if (hits === 0 && misses === 0 && faults === 0) {
-        hits = 15; misses = 6; faults = 3;
-      }
-
-      charts.quiz = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: ['Passed (Hits)', 'Failed (Misses)', 'Cheated (Faults)'],
-          datasets: [{
-            data: [hits, misses, faults],
-            backgroundColor: ['#00D4AA', '#FF4444', '#FFB347'],
-            borderColor: '#060609',
-            borderWidth: 2
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'right',
-              labels: { color: '#9CA3AF', boxWidth: 10, font: { size: 10 } }
-            }
+            x: { grid: { color: gridStyle }, ticks: { color: tickStyle } },
+            y: { grid: { color: gridStyle }, ticks: { color: tickStyle, stepSize: 1 } }
           }
         }
       });
@@ -1848,7 +1645,7 @@
           maintainAspectRatio: false,
           plugins: {
             legend: {
-              position: 'right',
+              position: 'bottom',
               labels: { color: '#9CA3AF', boxWidth: 10, font: { size: 10 } }
             }
           }
@@ -1856,64 +1653,7 @@
       });
     }
 
-    // Render Real-Time Audit feed timeline
-    function renderActivityFeed(logs) {
-      const feed = document.getElementById('activity-feed-list');
-      feed.innerHTML = '';
-
-      const sliced = logs.slice(0, 10);
-      if (sliced.length === 0) {
-        feed.innerHTML = `<div style="font-size: 13px; color: var(--text-muted);">No activity logged yet.</div>`;
-        return;
-      }
-
-      sliced.forEach(log => {
-        let iconHtml = '<i class="fa-solid fa-receipt"></i>';
-        let color = 'rgba(255, 255, 255, 0.03)';
-        let textColor = '#FFF';
-
-        if (log.action.includes('ban')) {
-          iconHtml = '<i class="fa-solid fa-user-slash"></i>';
-          color = 'rgba(255, 68, 68, 0.08)';
-          textColor = 'var(--danger)';
-        } else if (log.action.includes('unban')) {
-          iconHtml = '<i class="fa-solid fa-user-check"></i>';
-          color = 'rgba(0, 212, 170, 0.08)';
-          textColor = 'var(--secondary)';
-        } else if (log.action.includes('resolve')) {
-          iconHtml = '<i class="fa-solid fa-gavel"></i>';
-          color = 'rgba(255, 179, 71, 0.08)';
-          textColor = 'var(--warning)';
-        } else if (log.action.includes('announcement')) {
-          iconHtml = '<i class="fa-solid fa-bullhorn"></i>';
-          color = 'rgba(108, 99, 255, 0.08)';
-          textColor = 'var(--primary)';
-        } else if (log.action.includes('verify')) {
-          iconHtml = '<i class="fa-solid fa-certificate"></i>';
-          color = 'rgba(0, 212, 170, 0.08)';
-          textColor = 'var(--secondary)';
-        }
-
-        feed.innerHTML += `
-          <div class="activity-item">
-            <div class="activity-icon-box" style="background-color: ${color}; color: ${textColor};">
-              ${iconHtml}
-            </div>
-            <div>
-              <div class="activity-desc" style="color: #E2E2E9;">
-                System processed action <span style="font-family: monospace; font-weight: 700; color: ${textColor};">${log.action}</span>
-              </div>
-              <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">
-                Executor Ref: ${log.userId || 'System'} | IP: ${log.ip || '127.0.0.1'}
-              </div>
-              <div class="activity-time">${new Date(log.ts).toLocaleTimeString()}</div>
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    // Tab Loader: Users list
+    // Load User Accounts List
     async function loadUsers() {
       try {
         const res = await fetch('/api/admin/users', { headers: getHeaders() });
@@ -1938,48 +1678,18 @@
 
       list.forEach(user => {
         const isBanned = user.banned;
-        
-        let skillsHtml = '';
-        if (user.role === 'mentor') {
-          const teach = user.skillsToTeach || [];
-          const verified = user.verifiedSkills || [];
-          skillsHtml = teach.map(s => {
-            const isV = verified.includes(s);
-            return `<span class="skill-chip ${isV ? 'skill-verified' : ''}">
-              ${s} ${isV ? '<i class="fa-solid fa-circle-check"></i>' : ''}
-            </span>`;
-          }).join(' ') || '<span style="color: var(--text-muted); font-size: 12px;">No skills added</span>';
-
-          skillsHtml += `
-            <div style="margin-top: 8px; display: flex; gap: 6px; align-items: center;">
-              <input type="text" id="verify-input-${user._id}" placeholder="Skill to verify..." class="form-input" style="padding: 6px 10px; font-size: 11px; width: 140px; border-radius: 6px;">
-              <button class="action-btn action-unban" style="padding: 6px 10px; font-size: 11px; border-radius: 6px;" onclick="manuallyVerifySkill('${user._id}')">
-                Verify
-              </button>
-            </div>
-          `;
-        } else {
-          const learn = user.skillsToLearn || [];
-          skillsHtml = learn.map(s => `<span class="skill-chip">${s}</span>`).join(' ') || '<span style="color: var(--text-muted); font-size: 12px;">No learning list</span>';
-        }
-
         tbody.innerHTML += `
           <tr>
             <td>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div class="avatar-wrapper">${user.avatar || '👤'}</div>
-                <div>
-                  <div style="font-weight: 700; color: #FFF;">${user.name}</div>
-                  <div style="font-size: 12px; color: var(--text-secondary);">@${user.username}</div>
-                </div>
-              </div>
+              <div style="font-weight: 700; color: #FFF;">${user.name}</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">@${user.username}</div>
             </td>
             <td>${user.email || 'N/A'}</td>
             <td><span style="text-transform: capitalize; font-weight: 600;">${user.role}</span></td>
-            <td>${skillsHtml}</td>
+            <td><strong>${user.xp || 0} XP</strong></td>
             <td>
               <span class="status-tag ${isBanned ? 'status-banned' : 'status-active'}">
-                ${isBanned ? 'Banned' : 'Active'}
+                ${isBanned ? 'Suspended' : 'Active'}
               </span>
             </td>
             <td>
@@ -2000,20 +1710,10 @@
 
     function filterUsers() {
       const query = document.getElementById('user-search').value.toLowerCase().trim();
-      const roleFilter = document.getElementById('user-role-filter').value;
-      let filtered = usersList;
-
-      if (roleFilter !== 'all') {
-        filtered = filtered.filter(u => u.role === roleFilter);
-      }
-
-      if (query) {
-        filtered = filtered.filter(u => 
-          u.name.toLowerCase().includes(query) || 
-          u.username.toLowerCase().includes(query) ||
-          (u.email && u.email.toLowerCase().includes(query))
-        );
-      }
+      const filtered = usersList.filter(u =>
+        u.name.toLowerCase().includes(query) ||
+        u.username.toLowerCase().includes(query)
+      );
       renderUsers(filtered);
     }
 
@@ -2037,218 +1737,7 @@
       }
     }
 
-    async function manuallyVerifySkill(userId) {
-      const input = document.getElementById(`verify-input-${userId}`);
-      const skillName = input.value.trim();
-
-      if (!skillName) {
-        showToast('Skill name required', 'error');
-        return;
-      }
-
-      try {
-        const res = await fetch(`/api/admin/users/${userId}/verify-skill`, {
-          method: 'POST',
-          headers: getHeaders(),
-          body: JSON.stringify({ skill: skillName })
-        });
-
-        if (res.ok) {
-          showToast(`Skill "${skillName}" verified successfully`, 'success');
-          input.value = '';
-          loadUsers();
-        } else {
-          showToast('Verification failed', 'error');
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    // Tab Loader: Mentorships & Sessions
-    async function loadMentorshipsAndSessions() {
-      try {
-        const mRes = await fetch('/api/admin/mentorships', { headers: getHeaders() });
-        const mData = await mRes.json();
-        if (mData.ok) renderMentorships(mData.mentorships);
-
-        const sRes = await fetch('/api/admin/sessions', { headers: getHeaders() });
-        const sData = await sRes.json();
-        if (sData.ok) renderSessions(sData.sessions);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    function renderMentorships(list) {
-      const tbody = document.getElementById('mentorships-tbody');
-      tbody.innerHTML = '';
-
-      if (list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">No mentorship programs registered.</td></tr>`;
-        return;
-      }
-
-      list.forEach(m => {
-        tbody.innerHTML += `
-          <tr>
-            <td>
-              <div style="font-weight: 700;">${m.mentorId?.name || 'N/A'}</div>
-              <div style="font-size: 11px; color: var(--text-secondary);">@${m.mentorId?.username || 'mentor'}</div>
-            </td>
-            <td>
-              <div style="font-weight: 700;">${m.studentId?.name || 'N/A'}</div>
-              <div style="font-size: 11px; color: var(--text-secondary);">@${m.studentId?.username || 'student'}</div>
-            </td>
-            <td><strong style="color: var(--secondary);">${m.skill}</strong></td>
-            <td>
-              <span class="status-tag ${m.phase === 'enrolled' ? 'status-active' : 'status-warning'}">
-                ${m.phase}
-              </span>
-            </td>
-            <td>${new Date(m.startedAt || Date.now()).toLocaleDateString()}</td>
-          </tr>
-        `;
-      });
-    }
-
-    function renderSessions(list) {
-      const tbody = document.getElementById('sessions-tbody');
-      tbody.innerHTML = '';
-
-      if (list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">No active classes found.</td></tr>`;
-        return;
-      }
-
-      list.forEach(s => {
-        tbody.innerHTML += `
-          <tr>
-            <td><strong>${s.skill || 'Skill Subject'}</strong></td>
-            <td>${s.mentorId?.name || 'Mentor'}</td>
-            <td><code style="color: var(--primary);">${s.meetingLink || 'N/A'}</code></td>
-            <td>${s.duration || 60} mins</td>
-            <td>${new Date(s.scheduledAt).toLocaleString()}</td>
-          </tr>
-        `;
-      });
-    }
-
-    // Tab Loader: Vault Resources list
-    async function loadVaultResources() {
-      try {
-        const res = await fetch('/api/admin/vault', { headers: getHeaders() });
-        const data = await res.json();
-        if (data.ok) renderVault(data.vault);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    function renderVault(list) {
-      const tbody = document.getElementById('vault-tbody');
-      tbody.innerHTML = '';
-
-      if (list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No resources uploaded.</td></tr>`;
-        return;
-      }
-
-      list.forEach(item => {
-        tbody.innerHTML += `
-          <tr>
-            <td>
-              <div style="font-weight: 700; color: #FFF;">${item.title}</div>
-              <div style="font-size: 12px; color: var(--text-secondary); max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.description || 'No description provided'}</div>
-            </td>
-            <td>
-              <a href="${item.url}" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600; font-size: 13px;">
-                <i class="fa-solid fa-link"></i> Open Resource
-              </a>
-            </td>
-            <td><strong>${item.mentorshipId?.skill || 'Mentorship'}</strong></td>
-            <td>
-              <div style="font-weight: 600;">${item.uploadedBy?.name || 'User'}</div>
-              <div style="font-size: 11px; text-transform: capitalize; color: var(--text-secondary);">${item.uploadedBy?.role || 'uploader'}</div>
-            </td>
-            <td>${new Date(item.uploadedAt).toLocaleDateString()}</td>
-            <td>
-              <button class="action-btn action-ban" onclick="deleteVaultItem('${item._id}')">
-                <i class="fa-solid fa-trash-can"></i> Delete
-              </button>
-            </td>
-          </tr>
-        `;
-      });
-    }
-
-    async function deleteVaultItem(itemId) {
-      if (!confirm('Are you sure you want to permanently delete this resource from the vault?')) return;
-
-      try {
-        const res = await fetch(`/api/vault/item/${itemId}`, {
-          method: 'DELETE',
-          headers: getHeaders()
-        });
-
-        if (res.ok) {
-          showToast('Resource deleted from learning vault', 'success');
-          loadVaultResources();
-        } else {
-          showToast('Failed to delete resource', 'error');
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    // Tab Loader: Quiz Logs list
-    async function loadQuizzes() {
-      try {
-        const res = await fetch('/api/admin/dashboard', { headers: getHeaders() });
-        const data = await res.json();
-        if (data.ok) renderQuizzes(data.quizResults);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    function renderQuizzes(quizzes) {
-      const tbody = document.getElementById('quizzes-tbody');
-      tbody.innerHTML = '';
-
-      if (quizzes.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No quiz audits recorded.</td></tr>`;
-        return;
-      }
-
-      quizzes.forEach(q => {
-        let tagHtml = '';
-        if (q.abandoned) {
-          tagHtml = `<span class="status-tag status-warning"><i class="fa-solid fa-circle-exclamation"></i> Fault (Cheat)</span>`;
-        } else if (q.passed) {
-          tagHtml = `<span class="status-tag status-active"><i class="fa-solid fa-circle-check"></i> Hit (Pass)</span>`;
-        } else {
-          tagHtml = `<span class="status-tag status-banned"><i class="fa-solid fa-circle-xmark"></i> Miss (Fail)</span>`;
-        }
-
-        tbody.innerHTML += `
-          <tr>
-            <td>
-              <div style="font-weight: 600;">Candidate</div>
-              <div style="font-size: 12px; color: var(--text-secondary);">ID Ref: ${q.userId || 'N/A'}</div>
-            </td>
-            <td><strong>${q.skill}</strong></td>
-            <td>${q.score || 0}%</td>
-            <td>${tagHtml}</td>
-            <td>${q.timeTaken || 0}s</td>
-            <td>${new Date(q.date).toLocaleString()}</td>
-          </tr>
-        `;
-      });
-    }
-
-    // Tab Loader: Disputes
+    // Load Disputes
     async function loadDisputes() {
       try {
         const res = await fetch('/api/admin/disputes', { headers: getHeaders() });
@@ -2264,7 +1753,7 @@
       container.innerHTML = '';
 
       if (list.length === 0) {
-        container.innerHTML = '<div style="color: var(--text-muted); font-size: 14px;">No conflicts filed.</div>';
+        container.innerHTML = '<div style="color: var(--text-muted); font-size: 14px;">No disputes filed.</div>';
         return;
       }
 
@@ -2274,7 +1763,7 @@
           <div class="dispute-card">
             <div class="dispute-header">
               <div>
-                <span class="dispute-title">Subject: ${dis.mentorshipId?.skill || 'Mentorship'}</span>
+                <span class="dispute-title">Case Reference: ${dis.mentorshipId?.skill || 'Mentorship'}</span>
                 <div class="dispute-meta">Filed by: ${dis.filedBy?.name || 'User'} on ${new Date(dis.filedAt).toLocaleDateString()}</div>
               </div>
               <span class="status-tag ${isResolved ? 'status-active' : 'status-banned'}">
@@ -2283,17 +1772,17 @@
             </div>
 
             <div class="dispute-body">
-              <strong>Details:</strong> "${dis.reason}"
+              <strong>Complaint:</strong> "${dis.reason}"
             </div>
 
-            <div style="margin-top: auto;">
+            <div class="dispute-resolution">
               ${isResolved ? `
                 <div class="resolved-box">
-                  <div class="resolved-title"><i class="fa-solid fa-circle-check"></i> Resolution Approved</div>
-                  <div style="color: var(--text-secondary); font-size: 13px;">"${dis.resolution}"</div>
+                  <div class="resolved-title"><i class="fa-solid fa-circle-check"></i> Resolution Recorded</div>
+                  <div class="resolved-content">"${dis.resolution}"</div>
                 </div>
               ` : `
-                <textarea id="res-note-${dis._id}" class="resolution-textarea" style="height: 60px; margin-bottom: 12px;" placeholder="Type decision notes and resolution steps..."></textarea>
+                <textarea id="res-note-${dis._id}" class="resolution-textarea" placeholder="Type resolution terms and action steps..."></textarea>
                 <button class="btn btn-secondary" onclick="resolveCase('${dis._id}')">
                   <i class="fa-solid fa-gavel"></i> Resolve Dispute
                 </button>
@@ -2307,7 +1796,7 @@
     async function resolveCase(disputeId) {
       const text = document.getElementById(`res-note-${disputeId}`).value.trim();
       if (!text) {
-        showToast('Resolution note required', 'error');
+        showToast('Resolution notes required', 'error');
         return;
       }
 
@@ -2319,7 +1808,7 @@
         });
 
         if (res.ok) {
-          showToast('Dispute case resolved successfully', 'success');
+          showToast('Dispute resolved successfully', 'success');
           loadDisputes();
         } else {
           showToast('Failed to resolve dispute', 'error');
@@ -2329,60 +1818,40 @@
       }
     }
 
-    // Broadcast global alerts
-    async function broadcastAnnouncement() {
-      const textarea = document.getElementById('announcement-msg');
-      const text = textarea.value.trim();
-
-      if (!text) {
-        showToast('Please type a message first', 'error');
-        return;
-      }
-
+    // Load Audit Logs
+    async function loadAudits() {
       try {
-        const res = await fetch('/api/admin/announcement', {
-          method: 'POST',
-          headers: getHeaders(),
-          body: JSON.stringify({ message: text })
-        });
-
-        if (res.ok) {
-          showToast('Global announcement campaign broadcasted successfully', 'success');
-          textarea.value = '';
-        } else {
-          showToast('Broadcast execution failed', 'error');
-        }
+        const res = await fetch('/api/admin/audits', { headers: getHeaders() });
+        const data = await res.json();
+        if (data.ok) renderAudits(data.logs);
       } catch (err) {
         console.error(err);
       }
     }
 
-    // Tab Loader: Leaderboards & XP Logs
-    function loadLeaderboardData() {
-      const tbody = document.getElementById('leaderboard-tbody');
+    function renderAudits(logs) {
+      const tbody = document.getElementById('audits-tbody');
       tbody.innerHTML = '';
-      const sorted = [...usersList].sort((a,b) => (b.xp || 0) - (a.xp || 0));
 
-      if (sorted.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 20px;">No standings found.</td></tr>`;
+      if (logs.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 30px;">No audit trails found.</td></tr>`;
         return;
       }
 
-      sorted.forEach((user, index) => {
-        let rankText = `${index + 1}`;
-        if (index === 0) rankText = '🥇';
-        else if (index === 1) rankText = '🥈';
-        else if (index === 2) rankText = '🥉';
-
+      logs.forEach(log => {
         tbody.innerHTML += `
           <tr>
-            <td style="font-weight: 700; font-size: 15px;">${rankText}</td>
             <td>
-              <div style="font-weight: 700; color: #FFF;">${user.name}</div>
-              <div style="font-size: 11px; color: var(--text-secondary);">@${user.username}</div>
+              <div style="font-weight: 700; color: #FFF;">System Event</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">UID Ref: ${log.userId || 'System'}</div>
             </td>
-            <td style="text-transform: capitalize; font-weight: 600;">${user.role}</td>
-            <td><strong style="color: var(--primary);">${user.xp || 0} XP</strong></td>
+            <td>
+              <span class="badge-admin" style="font-size: 10px; background-color: var(--bg-input); border: 1px solid var(--border-color); color: #FFF; padding: 2px 6px;">
+                ${log.action.toUpperCase()}
+              </span>
+            </td>
+            <td><code>${log.ip || '127.0.0.1'}</code></td>
+            <td>${new Date(log.ts).toLocaleString()}</td>
           </tr>
         `;
       });

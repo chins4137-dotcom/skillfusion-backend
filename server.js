@@ -10,9 +10,20 @@ const mongoose  = require('mongoose');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 5000 });
     console.log(`✅ MongoDB Atlas connected`);
+  } catch (err) {
+    console.log(`⚠️ MongoDB Atlas connection failed: ${err.message}. Trying local fallback...`);
+    try {
+      await mongoose.connect('mongodb://localhost:27017/skillfusion', { serverSelectionTimeoutMS: 3000 });
+      console.log(`✅ Local MongoDB connected fallback`);
+    } catch (localErr) {
+      console.error(`❌ All MongoDB connections failed: ${localErr.message}`);
+      return;
+    }
+  }
 
+  try {
     // Auto-seed Admin account if it does not exist
     const User = require('./models/User');
     const bcrypt = require('bcryptjs');
@@ -39,7 +50,7 @@ const connectDB = async () => {
       console.log('✅ Admin user auto-seeded on startup (username: admin / password: admin123)');
     }
   } catch (err) {
-    console.error(`❌ MongoDB connection failed: ${err.message}`);
+    console.error(`❌ Error during db check or seeding: ${err.message}`);
   }
 };
 const errorHandler = require('./middleware/errorHandler');
