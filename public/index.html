@@ -2193,8 +2193,21 @@
     }
 
     async function deleteVaultItem(id) {
-      showToast('File deleted successfully', 'success');
-      loadVault();
+      if (!confirm('Are you sure you want to permanently delete this resource?')) return;
+      try {
+        const res = await fetch(`/api/admin/vault/${id}`, {
+          method: 'DELETE',
+          headers: getHeaders()
+        });
+        if (res.ok) {
+          showToast('File deleted successfully', 'success');
+          loadVault();
+        } else {
+          showToast('Failed to delete file', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
 
     // Load Quizzes

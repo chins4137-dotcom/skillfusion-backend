@@ -201,6 +201,23 @@ exports.getAllVaultItems = async (req, res, next) => {
   } catch (err) { next(err); }
 };
 
+// DELETE /api/admin/vault/:id ───────────────────────────
+exports.deleteVaultItem = async (req, res, next) => {
+  try {
+    const VaultItem = require('../models/VaultItem');
+    const item = await VaultItem.findByIdAndDelete(req.params.id);
+    if (!item) return res.status(404).json({ message: 'Item not found' });
+    
+    await AuditLog.create({
+      userId: req.user._id,
+      action: 'delete_vault_item',
+      ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress
+    });
+    
+    res.json({ ok: true, message: 'Vault item deleted successfully' });
+  } catch (err) { next(err); }
+};
+
 // GET /api/admin/mentorships ─────────────────────
 exports.getAllMentorships = async (req, res, next) => {
   try {
