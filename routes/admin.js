@@ -14,5 +14,8 @@ router.get('/sessions',         c.getAllSessions);
 router.get('/disputes',         c.getDisputes);
 router.patch('/disputes/:id',   c.resolveDispute);
 router.post('/announcement',    c.sendAnnouncement);
+router.get('/vault',            c.getAllVaultItems);
+router.get('/mentorships',      c.getAllMentorships);
+router.post('/users/:id/verify-skill', c.verifySkill);
 
 module.exports = router;

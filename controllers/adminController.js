@@ -188,3 +188,52 @@ exports.sendAnnouncement = async (req, res, next) => {
     res.json({ ok: true, message: `Announcement broadcasted to ${users.length} users successfully!` });
   } catch (err) { next(err); }
 };
+
+// GET /api/admin/vault ───────────────────────────
+exports.getAllVaultItems = async (req, res, next) => {
+  try {
+    const VaultItem = require('../models/VaultItem');
+    const items = await VaultItem.find()
+      .populate('uploadedBy', 'name username role')
+      .populate('mentorshipId', 'skill')
+      .sort({ uploadedAt: -1 });
+    res.json({ ok: true, vault: items });
+  } catch (err) { next(err); }
+};
+
+// GET /api/admin/mentorships ─────────────────────
+exports.getAllMentorships = async (req, res, next) => {
+  try {
+    const list = await Mentorship.find()
+      .populate('mentorId', 'name username avatar')
+      .populate('studentId', 'name username avatar')
+      .sort({ startedAt: -1 });
+    res.json({ ok: true, mentorships: list });
+  } catch (err) { next(err); }
+};
+
+// POST /api/admin/users/:id/verify-skill ──────────
+exports.verifySkill = async (req, res, next) => {
+  try {
+    const { skill } = req.body;
+    if (!skill) return res.status(400).json({ message: 'Skill name required' });
+
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (user.role !== 'mentor') return res.status(400).json({ message: 'Only mentors can have verified skills' });
+
+    if (!user.verifiedSkills.includes(skill)) {
+      user.verifiedSkills.push(skill);
+      await user.save();
+
+      // Log audit trail
+      await AuditLog.create({
+        userId: req.user._id,
+        action: `verify_${skill.toLowerCase()}`,
+        ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress
+      });
+    }
+
+    res.json({ ok: true, user });
+  } catch (err) { next(err); }
+};
