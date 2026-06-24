@@ -12,6 +12,32 @@ const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
     console.log(`✅ MongoDB Atlas connected`);
+
+    // Auto-seed Admin account if it does not exist
+    const User = require('./models/User');
+    const bcrypt = require('bcryptjs');
+    const existing = await User.findOne({ username: 'admin' });
+    if (!existing) {
+      const passwordHash = await bcrypt.hash('admin123', 12);
+      await User.create({
+        username:      'admin',
+        email:         'admin@skillfusion.app',
+        passwordHash,
+        name:          'SF Admin',
+        avatar:        '🛡️',
+        role:          'admin',
+        roles:         ['admin'],
+        activeRole:    'admin',
+        xp:            0,
+        badges:        [],
+        skillsToLearn: [],
+        skillsToTeach: [],
+        verifiedSkills:[],
+        ratings:       [],
+        averageRating: 0,
+      });
+      console.log('✅ Admin user auto-seeded on startup (username: admin / password: admin123)');
+    }
   } catch (err) {
     console.error(`❌ MongoDB connection failed: ${err.message}`);
   }
