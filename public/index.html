@@ -1114,6 +1114,9 @@
       <div class="nav-item" onclick="switchTab('broadcasts', this)">
         <i class="fa-solid fa-tower-broadcast"></i> <span>Global Broadcasts</span>
       </div>
+      <div class="nav-item" onclick="switchTab('leaderboards', this)">
+        <i class="fa-solid fa-trophy"></i> <span>Leaderboards</span>
+      </div>
 
       <!-- Collapsed toggle trigger -->
       <button class="sidebar-toggle" onclick="toggleSidebar()">
@@ -1268,6 +1271,7 @@
                   <th>Name / Username</th>
                   <th>Email</th>
                   <th>Role</th>
+                  <th>Skills & Verifications</th>
                   <th>XP Points</th>
                   <th>Account Status</th>
                   <th>Actions</th>
@@ -1414,6 +1418,27 @@
             </button>
           </div>
         </section>
+
+        <!-- VIEW 10: LEADERBOARDS -->
+        <section id="leaderboards" class="view-section">
+          <h1 class="view-title">Global Leaderboards</h1>
+          <p class="view-subtitle">Top users ranked by earned Experience Points (XP)</p>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>User Profile</th>
+                  <th>Role</th>
+                  <th>Experience Points</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboards-tbody">
+                <!-- Filled via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
       </div>
     </main>
   </div>
@@ -1514,6 +1539,7 @@
       { text: 'Switch to Disputes Resolver', action: () => switchTab('disputes', document.querySelectorAll('.nav-item')[6]) },
       { text: 'Switch to System Audits Log', action: () => switchTab('audits', document.querySelectorAll('.nav-item')[7]) },
       { text: 'Switch to Global Broadcasts', action: () => switchTab('broadcasts', document.querySelectorAll('.nav-item')[8]) },
+      { text: 'Switch to Leaderboards', action: () => switchTab('leaderboards', document.querySelectorAll('.nav-item')[9]) },
       { text: 'Sign Out Session', action: () => handleLogout() }
     ];
 
@@ -1655,6 +1681,7 @@
         else if (tabId === 'quizzes') loadQuizzes();
         else if (tabId === 'disputes') loadDisputes();
         else if (tabId === 'audits') loadAudits();
+        else if (tabId === 'leaderboards') loadLeaderboards();
       }, 350);
     }
 
@@ -1799,20 +1826,38 @@
       tbody.innerHTML = '';
 
       if (list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No matching accounts.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 30px;">No matching accounts.</td></tr>`;
         return;
       }
 
       list.forEach(user => {
         const isBanned = user.banned;
+        let skillsHtml = '';
+        if (user.role === 'mentor' && user.verifiedSkills) {
+          skillsHtml = user.verifiedSkills.map(s => `<span class="skill-chip skill-verified" style="margin-right:4px;"><i class="fa-solid fa-check-circle"></i> ${s}</span>`).join(' ');
+        }
+        
         tbody.innerHTML += `
           <tr>
             <td>
-              <div style="font-weight: 700; color: #FFF;">${user.name}</div>
-              <div style="font-size: 12px; color: var(--text-secondary);">@${user.username}</div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div class="avatar-wrapper" style="background-color: var(--primary); color: #fff;">${user.name.charAt(0).toUpperCase()}</div>
+                <div>
+                  <div style="font-weight: 700; color: #FFF;">${user.name}</div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">@${user.username}</div>
+                </div>
+              </div>
             </td>
             <td>${user.email || 'N/A'}</td>
             <td><span style="text-transform: capitalize; font-weight: 600;">${user.role}</span></td>
+            <td>
+              <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px;">${skillsHtml}</div>
+              ${user.role === 'mentor' ? `
+              <div style="display: flex; gap: 4px; margin-top: 4px;">
+                <input type="text" id="skill-input-${user._id}" placeholder="Type skill..." class="search-input" style="padding: 4px 8px; font-size: 11px; width: 100px; height: 26px;">
+                <button class="action-btn action-unban" style="padding: 4px 8px;" onclick="verifySkill('${user._id}')">Verify</button>
+              </div>` : '<span style="color:var(--text-muted);font-size:11px;">Not Applicable</span>'}
+            </td>
             <td><strong>${user.xp || 0} XP</strong></td>
             <td>
               <span class="status-tag ${isBanned ? 'status-banned' : 'status-active'}">
@@ -1833,6 +1878,22 @@
           </tr>
         `;
       });
+    }
+
+    async function verifySkill(userId) {
+      const input = document.getElementById(`skill-input-${userId}`);
+      if (!input || !input.value.trim()) return showToast('Enter a skill first', 'error');
+      try {
+        const res = await fetch(`/api/admin/users/${userId}/verify-skill`, {
+          method: 'POST',
+          headers: getHeaders(),
+          body: JSON.stringify({ skill: input.value.trim() })
+        });
+        if (res.ok) {
+          showToast('Skill verified successfully!', 'success');
+          loadUsers();
+        }
+      } catch (err) { console.error(err); }
     }
 
     function filterUsers() {
@@ -2003,19 +2064,37 @@
       list.forEach(m => {
         let pct = m.phase === 'request' ? 20 : (m.phase === 'demo' ? 50 : 100);
         if (m.status === 'completed') pct = 100;
+        
+        let mSkillsHtml = '';
+        if (m.mentorId && m.mentorId.verifiedSkills) {
+          mSkillsHtml = m.mentorId.verifiedSkills.map(s => `<span class="skill-chip skill-verified" style="font-size:9px; padding:2px 6px; margin-right:2px;">${s}</span>`).join('');
+        }
+
         tbody.innerHTML += `
           <tr>
             <td>
-              <div style="font-weight: 700; color: #FFF;">S: ${m.studentId?.name || 'Unknown'}</div>
-              <div style="font-size: 12px; color: var(--text-secondary);">M: ${m.mentorId?.name || 'Pending'}</div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom: 8px;">
+                <div class="avatar-wrapper" style="width:24px;height:24px;font-size:12px;background-color:var(--primary);color:#fff;">${(m.studentId?.name || 'U').charAt(0)}</div>
+                <div style="font-weight: 700; color: #FFF; font-size:13px;">S: ${m.studentId?.name || 'Unknown'}</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <div class="avatar-wrapper" style="width:24px;height:24px;font-size:12px;background-color:var(--secondary);color:#fff;">${(m.mentorId?.name || 'P').charAt(0)}</div>
+                <div style="font-size: 13px; color: var(--text-secondary);">M: ${m.mentorId?.name || 'Pending'}</div>
+              </div>
             </td>
-            <td><span class="badge-admin">${m.skill}</span></td>
             <td>
-              <span class="status-tag ${m.status === 'completed' ? 'status-active' : ''}">
+              <div style="margin-bottom:6px;"><span class="badge-admin">${m.skill}</span></div>
+              <div style="display:flex; flex-wrap:wrap; gap:2px;">${mSkillsHtml}</div>
+            </td>
+            <td>
+              <span class="status-tag ${m.status === 'completed' ? 'status-active' : 'status-warning'}">
                 ${m.phase} (${m.status})
               </span>
             </td>
-            <td style="width: 150px;">
+            <td style="width: 180px;">
+              <div style="display:flex; justify-content:space-between; font-size:10px; margin-bottom:4px; color:var(--text-secondary);">
+                <span>Progress</span><span>${pct}%</span>
+              </div>
               <div class="funnel-bar-bg"><div class="funnel-bar-fill" style="width: ${pct}%"></div></div>
             </td>
             <td>${new Date(m.startedAt || m.createdAt).toLocaleDateString()}</td>
@@ -2041,14 +2120,25 @@
         return;
       }
       list.forEach(s => {
+        let mins = Math.floor((s.endedAt ? (new Date(s.endedAt) - new Date(s.startedAt))/60000 : 0) || 0);
         tbody.innerHTML += `
           <tr>
-            <td><div style="font-weight: 700; color: #FFF;">${s.jitsiRoom || 'Room Unavailable'}</div></td>
             <td>
-              <div style="font-size: 12px; color: var(--text-secondary);">M: ${s.mentorId?.name || 'N/A'} | S: ${s.studentId?.name || 'N/A'}</div>
+              <div style="font-weight: 700; color: #FFF; margin-bottom: 4px;">${s.jitsiRoom || 'Room Unavailable'}</div>
+              <button class="action-btn action-unban" style="padding: 2px 8px; font-size: 10px;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Log</button>
             </td>
-            <td>${s.mentorshipId?.skill || 'N/A'}</td>
-            <td><strong>${Math.floor((s.endedAt ? (new Date(s.endedAt) - new Date(s.startedAt))/60000 : 0) || 0)} mins</strong></td>
+            <td>
+              <div style="display:flex; align-items:center; gap:8px; font-size: 12px; color: var(--text-secondary); margin-bottom:4px;">
+                <div class="avatar-wrapper" style="width:20px;height:20px;font-size:10px;background-color:var(--secondary);color:#fff;">${(s.mentorId?.name || 'N').charAt(0)}</div>
+                M: ${s.mentorId?.name || 'N/A'}
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; font-size: 12px; color: var(--text-secondary);">
+                <div class="avatar-wrapper" style="width:20px;height:20px;font-size:10px;background-color:var(--primary);color:#fff;">${(s.studentId?.name || 'N').charAt(0)}</div>
+                S: ${s.studentId?.name || 'N/A'}
+              </div>
+            </td>
+            <td><span class="skill-chip">${s.mentorshipId?.skill || 'N/A'}</span></td>
+            <td><strong style="color: var(--secondary); font-size: 16px;">${mins} <span style="font-size:12px; font-weight:400; color:var(--text-secondary)">mins</span></strong></td>
             <td>${new Date(s.startedAt).toLocaleString()}</td>
           </tr>
         `;
@@ -2072,16 +2162,30 @@
         return;
       }
       list.forEach(v => {
+        let icon = 'fa-file';
+        let color = '#9CA3AF';
+        if (v.fileType === 'pdf') { icon = 'fa-file-pdf'; color = '#EF4444'; }
+        else if (v.fileType === 'video') { icon = 'fa-file-video'; color = '#3B82F6'; }
+        else if (v.fileType === 'link') { icon = 'fa-link'; color = '#00D4AA'; }
+
         tbody.innerHTML += `
           <tr>
-            <td><div style="font-weight: 700; color: #FFF;">${v.title}</div></td>
+            <td>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <i class="fa-solid ${icon}" style="font-size: 24px; color: ${color};"></i>
+                <div style="font-weight: 700; color: #FFF;">${v.title}</div>
+              </div>
+            </td>
             <td><span class="badge-admin">${v.fileType}</span></td>
             <td>${v.uploadedBy?.name || 'Unknown'}</td>
-            <td>${v.mentorshipId?.skill || 'Global'}</td>
+            <td><span class="skill-chip">${v.mentorshipId?.skill || 'Global'}</span></td>
             <td>
-              <button class="action-btn action-ban" onclick="deleteVaultItem('${v._id}')">
-                <i class="fa-solid fa-trash"></i> Delete
-              </button>
+              <div style="display:flex; gap:8px;">
+                ${v.url ? `<a href="${v.url}" target="_blank" class="action-btn action-unban" style="text-decoration:none;"><i class="fa-solid fa-download"></i> View</a>` : ''}
+                <button class="action-btn action-ban" onclick="deleteVaultItem('${v._id}')">
+                  <i class="fa-solid fa-trash"></i> Delete
+                </button>
+              </div>
             </td>
           </tr>
         `;
@@ -2111,17 +2215,24 @@
       }
       list.forEach(q => {
         const isMalpractice = q.malpracticeFlags > 0;
+        const scoreColor = q.score >= 80 ? 'var(--secondary)' : 'var(--danger)';
         tbody.innerHTML += `
           <tr>
-            <td><div style="font-weight: 700; color: #FFF;">UID: ${q.studentId}</div></td>
-            <td>${q.skill}</td>
-            <td><strong>${q.score}%</strong></td>
             <td>
-              <span class="status-tag ${isMalpractice ? 'status-banned' : (q.passed ? 'status-active' : '')}">
-                ${isMalpractice ? '⚠️ Malpractice' : (q.passed ? '✅ Passed' : '❌ Failed')}
+              <div style="font-weight: 700; color: #FFF;">UID: ${q.studentId}</div>
+              <div style="font-size: 11px; color: var(--text-secondary); margin-top:4px;">Attempted Quiz</div>
+            </td>
+            <td><span class="skill-chip">${q.skill}</span></td>
+            <td><strong style="color: ${scoreColor}; font-size: 18px;">${q.score}%</strong></td>
+            <td>
+              <span class="status-tag ${isMalpractice ? 'status-banned' : (q.passed ? 'status-active' : 'status-warning')}">
+                ${isMalpractice ? '<i class="fa-solid fa-triangle-exclamation"></i> Malpractice' : (q.passed ? '✅ Passed' : '❌ Failed')}
               </span>
             </td>
-            <td>${new Date(q.date).toLocaleString()}</td>
+            <td>
+              <div style="font-size: 13px;">${new Date(q.date).toLocaleDateString()}</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">${new Date(q.date).toLocaleTimeString()}</div>
+            </td>
           </tr>
         `;
       });
@@ -2145,6 +2256,50 @@
           showToast('Failed to send broadcast', 'error');
         }
       } catch (err) { console.error(err); }
+    }
+
+    // Load Leaderboards
+    async function loadLeaderboards() {
+      try {
+        const res = await fetch('/api/admin/users', { headers: getHeaders() });
+        const data = await res.json();
+        if (data.ok) renderLeaderboards(data.users);
+      } catch (err) { console.error(err); }
+    }
+
+    function renderLeaderboards(list) {
+      const tbody = document.getElementById('leaderboards-tbody');
+      tbody.innerHTML = '';
+      const sorted = list.sort((a, b) => (b.xp || 0) - (a.xp || 0));
+      
+      if (sorted.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 30px;">No users ranked.</td></tr>`;
+        return;
+      }
+
+      sorted.forEach((user, index) => {
+        let rankText = \`#\${index + 1}\`;
+        if (index === 0) rankText = '<span style="font-size:24px;">🥇</span>';
+        else if (index === 1) rankText = '<span style="font-size:24px;">🥈</span>';
+        else if (index === 2) rankText = '<span style="font-size:24px;">🥉</span>';
+
+        tbody.innerHTML += `
+          <tr>
+            <td style="font-weight: 800; font-size: 18px; color: var(--text-secondary); width: 80px; text-align:center;">\${rankText}</td>
+            <td>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div class="avatar-wrapper" style="background-color: var(--primary); color: #fff; width:36px; height:36px;">\${user.name.charAt(0).toUpperCase()}</div>
+                <div>
+                  <div style="font-weight: 700; color: #FFF; font-size:15px;">\${user.name}</div>
+                  <div style="font-size: 12px; color: var(--text-secondary);">@\${user.username}</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="skill-chip" style="text-transform: uppercase;">\${user.role}</span></td>
+            <td><strong style="color: var(--primary); font-size: 18px;">\${user.xp || 0} <span style="font-size:12px; font-weight:600; color:var(--text-secondary)">XP</span></strong></td>
+          </tr>
+        `;
+      });
     }
   </script>
 </body>
