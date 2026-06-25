@@ -8,19 +8,33 @@ const cors      = require('cors');
 const morgan    = require('morgan');
 const mongoose  = require('mongoose');
 
+let cached = global.mongoose;
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
 const connectDB = async () => {
+  if (cached.conn) return cached.conn;
+
+  if (!cached.promise) {
+    const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/skillfusion';
+    cached.promise = mongoose.connect(uri, { 
+      serverSelectionTimeoutMS: 5000,
+      bufferCommands: false // Disable buffering so it fails fast instead of hanging
+    }).then((mongoose) => {
+      console.log(`✅ MongoDB connected successfully`);
+      return mongoose;
+    }).catch(err => {
+      console.log(`❌ MongoDB connection failed: ${err.message}`);
+      cached.promise = null;
+      throw err;
+    });
+  }
+
   try {
-    await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 5000 });
-    console.log(`✅ MongoDB Atlas connected`);
-  } catch (err) {
-    console.log(`⚠️ MongoDB Atlas connection failed: ${err.message}. Trying local fallback...`);
-    try {
-      await mongoose.connect('mongodb://localhost:27017/skillfusion', { serverSelectionTimeoutMS: 3000 });
-      console.log(`✅ Local MongoDB connected fallback`);
-    } catch (localErr) {
-      console.error(`❌ All MongoDB connections failed: ${localErr.message}`);
-      return;
-    }
+    cached.conn = await cached.promise;
+  } catch (e) {
+    throw e;
   }
 
   try {
@@ -47,18 +61,26 @@ const connectDB = async () => {
         ratings:       [],
         averageRating: 0,
       });
-      console.log('✅ Admin user auto-seeded on startup (username: admin / password: admin123)');
+      console.log('✅ Admin user auto-seeded on startup');
     }
   } catch (err) {
     console.error(`❌ Error during db check or seeding: ${err.message}`);
   }
+  return cached.conn;
 };
 const errorHandler = require('./middleware/errorHandler');
 
-// ── Connect to MongoDB Atlas ──────────────────────────────
-connectDB();
-
 const app = express();
+
+// ── Serverless DB Middleware ──────────────────────────────
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ message: 'Database connection failed', error: err.message });
+  }
+});
 
 const path = require('path');
 
